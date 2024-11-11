@@ -1,6 +1,6 @@
-#include "utils.h"
+#include "controller.h"
 
 int main()
 {
-    inicializar_loja();
+    menu(4);
 }

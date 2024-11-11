@@ -1,0 +1,49 @@
+Marca,Produto,Categoria,Tamanhos
+His,Polo His Vermelha,Camisa,M
+His,Regata His Colorida,Camisa,G, GG
+His,Camisa Básica Preta,Camisa,P, M, G
+His,Camisa U-V Branca,Camisa,M
+Zip Naútica,Bermuda Surf Azul,Bermuda,P, M, G
+Zip Naútica,Estampa Tropical,Bermuda,GG
+Zip Naútica,Casual Náutica,Bermuda,P, M, G, GG
+Zip Naútica,Bermuda Clássica Branca,Bermuda,M, G
+Nike,Camisa Esportiva Nike,Camisa,GG
+Nike,Dry Fit Azul,Camisa,P, M, G
+Nike,Performance Cinza,Camisa,M, GG
+Nike,Training Preta,Camisa,P, M, G
+Seway,Camisa Casual Verde,Camisa,P, G
+Seway,Social Clássica,Camisa,M, G
+Seway,Polo Fit Preta,Camisa,G, GG
+Seway,Camisa Slim Vermelha,Camisa,P, M, GG
+His,Tênis Casual,Calçado,37-44
+His,Mocassim,Calçado,38-43
+His,Sandália,Calçado,39-44
+His,Chinelo,Calçado,37-44
+Zip Naútica,Sapato Náutico,Calçado,38-44
+Zip Naútica,Sandália de Couro,Calçado,38-42
+Zip Naútica,Sapato Social,Calçado,39-44
+Zip Naútica,Mocassim Náutico,Calçado,37-43
+Nike,Runnning,Calçado,38-44
+Nike,Casual Sport,Calçado,37-45
+Nike,Tênis Esportivo,Calçado,38-44
+Nike,Sandália Esportiva,Calçado,39-44
+Seway,Tênis Urbano,Calçado,38-43
+Seway,Sapato Social,Calçado,39-44
+Seway,Tênis Casual,Calçado,37-44
+Seway,Sandália Casual,Calçado,37-43
+His,Boné Clássico,Acessório,Único
+His,Cinto de Couro,Acessório,P, M, G
+His,Relógio Casual,Acessório,Único
+His,Meia Esportiva,Acessório,38-44
+Zip Naútica,Óculos de Sol,Acessório,Único
+Zip Naútica,Chapéu de Praia,Acessório,Único
+Zip Naútica,Cinto Náutico,Acessório,P, M, G
+Zip Naútica,Mochila Estampada,Acessório,Único
+Nike,Boné Esportivo,Acessório,Único
+Nike,Meia Performance,Acessório,38-44
+Nike,Luva de Treino,Acessório,P, M, G
+Nike,Bolsa Esportiva,Acessório,Único
+Seway,Boné Casual,Acessório,Único
+Seway,Cinto Clássico,Acessório,P, M, G
+Seway,Óculos de Sol,Acessório,Único
+Seway,Mochila Urbana,Acessório,Único
