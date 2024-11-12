@@ -3,19 +3,25 @@
 #include "view.h"
 #include "controller.h"
 
-void inicializar_loja()
+static void imprimir_cabeçalho()
 {
     printf("------------------");
-    printf(" LOJA VIRTUAL ");
-    printf("------------------\n");
+    printf(" FEIN ");
+    printf("------------------");
+    printf("\n\n");
 }
 
-void visualizar_produtos(const char *categoria)
+void imprimir_menu()
 {
-    pesquisar_produtos(categoria);
+    imprimir_cabeçalho();
+    printf("1. Camisas\n");
+    printf("2. Bermudas\n");
+    printf("3. Calçados\n");
+    printf("4. Acessórios\n");
+    printf("Qual a opção desejada? ");
 }
 
-void renderizar_produto(char *produto)
+void imprimir_produto(char *produto)
 {
     char *campo = strtok(produto, ",");
     while (campo != NULL)

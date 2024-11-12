@@ -4,13 +4,8 @@
 #include "model.h"
 #include "controller.h"
 
-// Protótipos
-static FILE* ler_arquivo(const char *caminho_arquivo);
-static int verificar_categoria(char *produto, const char *categoria);
-static void imprimir_produto(char *produto);
-
 // Funções model
-static FILE* ler_arquivo(const char *caminho_arquivo)
+static FILE* ler_arquivo(char *caminho_arquivo)
 {
     FILE *arquivo = fopen(caminho_arquivo, "r");
     if (arquivo == NULL)
@@ -20,28 +15,7 @@ static FILE* ler_arquivo(const char *caminho_arquivo)
     return arquivo;
 }
 
-int pegar_produtos(const char *categoria)
-{
-    FILE *arquivo = ler_arquivo("data/database.csv");
-    if (arquivo == NULL)
-    {
-        return 1;
-    }
-
-    int tamanho_produto = 100;
-    char produto[tamanho_produto];
-    while(fgets(produto, tamanho_produto, arquivo))
-    {
-        if (verificar_categoria(produto, categoria))
-        {
-            imprimir_produto(produto);
-        }
-    }
-    fclose(arquivo);
-    return 0;
-}
-
-static int verificar_categoria(char *produto, const char *categoria)
+static int verificar_categoria(char *produto, char *categoria)
 {
     char copia_produto[100];
     strncpy(copia_produto, produto, sizeof(copia_produto));
@@ -58,4 +32,30 @@ static int verificar_categoria(char *produto, const char *categoria)
         campo = strtok(NULL, ",");
         coluna++;
     }
+}
+
+int pegar_produtos(char *categoria)
+{
+    FILE *arquivo = ler_arquivo("data/database.csv");
+    if (arquivo == NULL)
+    {
+        return 1;
+    }
+
+    int tamanho_produto = 100;
+    char produto[tamanho_produto];
+    while(fgets(produto, tamanho_produto, arquivo))
+    {
+        if (verificar_categoria(produto, categoria))
+        {
+            // exibir_produto(produto);
+        }
+    }
+    fclose(arquivo);
+    return 0;
+}
+
+void pegar_entrada(int *entrada)
+{
+    scanf("%d", entrada);
 }

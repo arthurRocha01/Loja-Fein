@@ -3,38 +3,51 @@
 #include "model.h"
 #include "view.h"
 
-int menu(int opc)
+static int manipulador_entrada()
+{
+    int entrada;
+    pegar_entrada(&entrada);
+    return entrada;
+}
+
+static void exibir_produtos(char *categoria)
+{
+    // produtos (linked list)
+}
+
+static void menu(int opc)
 {
     switch (opc)
     {
     case 1:
-        visualizar_produtos("Camisa");
+        // camisas
         break;
 
     case 2:
-        visualizar_produtos("Bermuda");
-        break;
+    // bermudas
+    break;
 
     case 3:
-        visualizar_produtos("Calçados");
+        // calçados
         break;
 
     case 4:
-    visualizar_produtos("Acessório");
+        // acessórios
         break;
-
+    
     default:
-        printf("Opção inválida!\n");
+        printf("Opção inválida\n");
         break;
     }
 }
 
-int pesquisar_produtos(const char *categoria)
+static void manipulador_fluxo()
 {
-    pegar_produtos(categoria);
+    imprimir_menu();
+    int opc = manipulador_entrada();
 }
 
-int imprimir_produto(const char *produto)
+void iniciar_loja()
 {
-    renderizar_produto(produto);
+    manipulador_fluxo();
 }

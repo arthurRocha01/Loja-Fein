@@ -2,5 +2,5 @@
 
 int main()
 {
-    menu(4);
+    iniciar_loja();
 }
