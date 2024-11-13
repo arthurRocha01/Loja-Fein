@@ -2,6 +2,7 @@
 #include "controller.h"
 #include "model.h"
 #include "view.h"
+#include "structs.h"
 
 static int manipulador_entrada()
 {
@@ -12,7 +13,8 @@ static int manipulador_entrada()
 
 static void exibir_produtos(char *categoria)
 {
-    // produtos (linked list)
+    ListaProdutos produtos = pegar_produtos(categoria);
+    imprimir_produtos(&produtos);
 }
 
 static void menu(int opc)
@@ -20,19 +22,19 @@ static void menu(int opc)
     switch (opc)
     {
     case 1:
-        // camisas
+        exibir_produtos("Camisa");
         break;
 
     case 2:
-    // bermudas
-    break;
+        exibir_produtos("Bermuda");
+        break;
 
     case 3:
-        // calçados
+        exibir_produtos("Calçado");
         break;
 
     case 4:
-        // acessórios
+        exibir_produtos("Acessório");
         break;
     
     default:
@@ -45,6 +47,7 @@ static void manipulador_fluxo()
 {
     imprimir_menu();
     int opc = manipulador_entrada();
+    menu(opc);
 }
 
 void iniciar_loja()

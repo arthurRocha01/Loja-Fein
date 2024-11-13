@@ -2,6 +2,7 @@
 #include <string.h>
 #include "view.h"
 #include "controller.h"
+#include "structs.h"
 
 static void imprimir_cabeçalho()
 {
@@ -21,13 +22,10 @@ void imprimir_menu()
     printf("Qual a opção desejada? ");
 }
 
-void imprimir_produto(char *produto)
+void imprimir_produtos(ListaProdutos *lista)
 {
-    char *campo = strtok(produto, ",");
-    while (campo != NULL)
+    for (size_t i = 0; i < lista->tamanho; i++)
     {
-        printf("%s ", campo);
-        campo = strtok(NULL, ",");
+        printf("%s\n", lista->produtos[i]);
     }
-    printf("\n");
 }

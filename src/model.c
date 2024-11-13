@@ -1,10 +1,10 @@
+#include "model.h"
+#include "controller.h"
+#include "structs.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "model.h"
-#include "controller.h"
 
-// Funções model
 static FILE* ler_arquivo(char *caminho_arquivo)
 {
     FILE *arquivo = fopen(caminho_arquivo, "r");
@@ -34,25 +34,26 @@ static int verificar_categoria(char *produto, char *categoria)
     }
 }
 
-int pegar_produtos(char *categoria)
+ListaProdutos pegar_produtos(char *categoria)
 {
     FILE *arquivo = ler_arquivo("data/database.csv");
     if (arquivo == NULL)
     {
-        return 1;
+        // return 1;
     }
 
-    int tamanho_produto = 100;
-    char produto[tamanho_produto];
-    while(fgets(produto, tamanho_produto, arquivo))
+    ListaProdutos lista_produtos;
+    inicializar_lista(&lista_produtos, 10);
+    char produto[100];
+    while(fgets(produto, sizeof(produto), arquivo))
     {
         if (verificar_categoria(produto, categoria))
         {
-            // exibir_produto(produto);
+            adcionar_produto(&lista_produtos, produto);
         }
     }
     fclose(arquivo);
-    return 0;
+    return lista_produtos;
 }
 
 void pegar_entrada(int *entrada)
