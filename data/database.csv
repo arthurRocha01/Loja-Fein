@@ -1,49 +1,49 @@
-Marca,Produto,Categoria,Tamanhos
-His,Polo His Vermelha,Camisa,M
-His,Regata His Colorida,Camisa,G, GG
-His,Camisa Básica Preta,Camisa,P, M, G
-His,Camisa U-V Branca,Camisa,M
-Zip Naútica,Bermuda Surf Azul,Bermuda,P, M, G
-Zip Naútica,Estampa Tropical,Bermuda,GG
-Zip Naútica,Casual Náutica,Bermuda,P, M, G, GG
-Zip Naútica,Bermuda Clássica Branca,Bermuda,M, G
-Nike,Camisa Esportiva Nike,Camisa,GG
-Nike,Dry Fit Azul,Camisa,P, M, G
-Nike,Performance Cinza,Camisa,M, GG
-Nike,Training Preta,Camisa,P, M, G
-Seway,Camisa Casual Verde,Camisa,P, G
-Seway,Social Clássica,Camisa,M, G
-Seway,Polo Fit Preta,Camisa,G, GG
-Seway,Camisa Slim Vermelha,Camisa,P, M, GG
-His,Tênis Casual,Calçado,37-44
-His,Mocassim,Calçado,38-43
-His,Sandália,Calçado,39-44
-His,Chinelo,Calçado,37-44
-Zip Naútica,Sapato Náutico,Calçado,38-44
-Zip Naútica,Sandália de Couro,Calçado,38-42
-Zip Naútica,Sapato Social,Calçado,39-44
-Zip Naútica,Mocassim Náutico,Calçado,37-43
-Nike,Runnning,Calçado,38-44
-Nike,Casual Sport,Calçado,37-45
-Nike,Tênis Esportivo,Calçado,38-44
-Nike,Sandália Esportiva,Calçado,39-44
-Seway,Tênis Urbano,Calçado,38-43
-Seway,Sapato Social,Calçado,39-44
-Seway,Tênis Casual,Calçado,37-44
-Seway,Sandália Casual,Calçado,37-43
-His,Boné Clássico,Acessório,Único
-His,Cinto de Couro,Acessório,P, M, G
-His,Relógio Casual,Acessório,Único
-His,Meia Esportiva,Acessório,38-44
-Zip Naútica,Óculos de Sol,Acessório,Único
-Zip Naútica,Chapéu de Praia,Acessório,Único
-Zip Naútica,Cinto Náutico,Acessório,P, M, G
-Zip Naútica,Mochila Estampada,Acessório,Único
-Nike,Boné Esportivo,Acessório,Único
-Nike,Meia Performance,Acessório,38-44
-Nike,Luva de Treino,Acessório,P, M, G
-Nike,Bolsa Esportiva,Acessório,Único
-Seway,Boné Casual,Acessório,Único
-Seway,Cinto Clássico,Acessório,P, M, G
-Seway,Óculos de Sol,Acessório,Único
-Seway,Mochila Urbana,Acessório,Único
+Marca,Nome do Produto,Categoria,Cor,Tamanhos Disponíveis,Valor,Quantidade em Estoque
+His,Polo Slim Fit Vermelha,Camisa,Vermelha,M, 129.90,50
+His,Regata Estampada Colorida,Camisa,Colorida,G, GG, 69.90,80
+His,Camisa Básica Básica Preta,Camisa,Preta,P, M, G, 79.90,120
+His,Camisa Polo UV Branca,Camisa,Branca,M, 89.90,100
+Zip Naútica,Bermuda Surf Clássica Azul,Bermuda,Azul,P, M, G, 99.90,40
+Zip Naútica,Bermuda Estampa Tropical,Bermuda,Tropical,GG, 89.90,30
+Zip Naútica,Bermuda Casual Náutica,Bermuda,Náutica,P, M, G, GG, 109.90,60
+Zip Naútica,Bermuda Clássica Branca,Bermuda,Branca,M, G, 79.90,70
+Nike,Camiseta Esportiva Dry Fit,Camisa,Preta,GG, 159.90,50
+Nike,Camiseta Dry Fit Azul,Camisa,Azul,P, M, G, 129.90,100
+Nike,Camiseta Performance Cinza,Camisa,Cinza,M, GG, 139.90,60
+Nike,Camiseta Training Preta,Camisa,Preta,P, M, G, 149.90,80
+Seway,Camisa Casual Verde,Camisa,Verde,P, G, 89.90,90
+Seway,Camisa Social Clássica Branca,Camisa,Branca,M, G, 99.90,50
+Seway,Polo Fit Preta,Camisa,Preta,G, GG, 119.90,30
+Seway,Camisa Slim Fit Vermelha,Camisa,Vermelha,P, M, GG, 109.90,60
+His,Tênis Casual Preto,Calçado,Preto,37-44,199.90,150
+His,Mocassim Couro Café,Calçado,Café,38-43,169.90,80
+His,Sandália Confortável Bege,Calçado,Bege,39-44,89.90,100
+His,Chinelo Casual Azul,Calçado,Azul,37-44,29.90,200
+Zip Naútica,Sapato Náutico Azul,Calçado,Azul,38-44,179.90,70
+Zip Naútica,Sandália Couro Marrom,Calçado,Couro,38-42,159.90,40
+Zip Naútica,Sapato Social Preto,Calçado,Preto,39-44,199.90,60
+Zip Naútica,Mocassim Náutico Azul,Calçado,Azul,37-43,169.90,50
+Nike,Tênis Running Azul,Calçado,Azul,38-44,229.90,120
+Nike,Tênis Casual Preto,Calçado,Preto,37-45,219.90,150
+Nike,Tênis Esportivo Cinza,Calçado,Cinza,38-44,249.90,90
+Nike,Sandália Esportiva Preta,Calçado,Preta,39-44,149.90,80
+Seway,Tênis Casual Urbano Preto,Calçado,Preto,38-43,179.90,110
+Seway,Sapato Social Preto,Calçado,Preto,39-44,189.90,60
+Seway,Tênis Casual Bege,Calçado,Bege,37-44,159.90,130
+Seway,Sandália Casual Bege,Calçado,Bege,37-43,99.90,90
+His,Boné Clássico Preto,Acessório,Preto,Único,49.90,120
+His,Cinto de Couro Preto,Acessório,Preto,P, M, G, 59.90,50
+His,Relógio Casual Preto,Acessório,Preto,Único,129.90,40
+His,Meia Esportiva Branca,Acessório,Branca,38-44,29.90,200
+Zip Naútica,Óculos de Sol Preto,Acessório,Preto,Único,89.90,80
+Zip Naútica,Chapéu de Praia Bege,Acessório,Bege,Único,49.90,60
+Zip Naútica,Cinto Náutico Azul,Acessório,Azul,P, M, G, 69.90,40
+Zip Naútica,Mochila Estampada Acessório,Estampada,Único,99.90,50
+Nike,Boné Esportivo Azul,Acessório,Azul,Único,59.90,70
+Nike,Meia Performance Preta,Acessório,Preta,38-44,39.90,150
+Nike,Luva de Treino Preta,Acessório,Preta,P, M, G, 69.90,100
+Nike,Bolsa Esportiva Preta,Acessório,Preta,Único,119.90,30
+Seway,Boné Casual Azul,Acessório,Azul,Único,49.90,90
+Seway,Cinto Clássico Preto,Acessório,Preto,P, M, G, 59.90,60
+Seway,Óculos de Sol Preto,Acessório,Preto,Único,79.90,120
+Seway,Mochila Urbana Preta,Acessório,Preta,Único,139.90,40

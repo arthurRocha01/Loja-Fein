@@ -5,5 +5,6 @@
 
 void imprimir_produtos(ListaProdutos *lista);
 void imprimir_menu();
+void imprimir_opcs_catalago();
 
 #endif

@@ -3,7 +3,9 @@
 
 #include "structs.h"
 
-ListaProdutos pegar_produtos(char *categoria);
-void pegar_entrada(int *entrada);
+ListaProdutos pegar_produtos_por_categoria(char *categoria);
+int pegar_entrada();
+void limpar_terminal();
+void terminar();
 
 #endif
