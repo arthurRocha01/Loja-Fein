@@ -5,6 +5,7 @@
 
 
 typedef struct {
+    int id;
     char *marca;
     char *nome;
     char *categoria;
@@ -24,6 +25,6 @@ void inicializar_lista(ListaProdutos *lista);
 void adcionar_produto(ListaProdutos *lista, Produto *produto);
 void liberar_lista(ListaProdutos *lista);
 
-Produto *criar_produto(char *info);
+Produto *criar_produto(char *info, int id);
 
 #endif

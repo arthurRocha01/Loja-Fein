@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-void definir_atributo_produto(Produto *produto, char *valor, int atributo)
+static void definir_atributos_produto(Produto *produto, char *valor, int id, int atributo)
 {
+    produto->id = id;
     switch (atributo)
     {
         case 0: produto->marca = strdup(valor); break;
@@ -16,16 +17,16 @@ void definir_atributo_produto(Produto *produto, char *valor, int atributo)
     }
 }
 
-Produto *criar_produto(char *info)
+Produto *criar_produto(char *linha, int id)
 {
     Produto *produto = malloc(sizeof(Produto));
-    char *campo = strtok(info, ",");
-    int controle = 0;
-    while (campo != NULL)
+    char *token = strtok(linha, ",");
+    int atributo = 0;
+    while (token != NULL)
     {
-        definir_atributo_produto(produto, campo, controle);
-        controle++;
-        campo = strtok(NULL, ",");
+        definir_atributos_produto(produto, token, id, atributo);
+        atributo++;
+        token = strtok(NULL, ",");
     }
     return produto;
 }

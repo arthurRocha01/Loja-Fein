@@ -4,58 +4,66 @@
 #include "structs.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
-static void gerenciador_opcs_catalago(int opc)
+static Produto* selecionar_produto(ListaProdutos *produtos)
 {
-    switch (opc)
+    int id = pegar_entrada("Digite o ID do produto desejado: ");
+    Produto *produto = buscar_produto(id, produtos);
+    if (!produto)
     {
-        case 1: return; break;
-        case 2: return; break;
+        printf("\nProduto não encontrado\n");
+    }
+    return produto;
+}
+
+static void fluxo_compra(ListaProdutos *produtos)
+{
+    Produto *produto = selecionar_produto(produtos);
+    if (produto)
+    {
+        imprimir_compra("Produto comprado com sucesso!", produto);
     }
 }
 
-static void iniciar_opcs_catalago()
+int selecionar_opcao(ListaProdutos *produtos)
 {
-    imprimir_opcs_catalago();
-    int entrada = pegar_entrada();
-    gerenciador_opcs_catalago(entrada);
+    imprimir_opcaos_produto();
+    int entradas[] = {1, 2};
+    int opcao = pegar_entrada_personalizada("Escolha uma opção: ", entradas, 2);
+    if (opcao == 1)
+    {
+        fluxo_compra(produtos);
+    }
 }
 
-static void carregar_produtos(char *categoria)
+static void exibir_categoria(const char *categoria)
 {
     ListaProdutos produtos = pegar_produtos_por_categoria(categoria);
     imprimir_produtos(&produtos);
+    selecionar_opcao(&produtos);
 }
 
-static void gerenciador_catalago(int opc)
+static void gerenciar_menu()
 {
-    switch (opc)
+    int opcao;
+    do
     {
-        case 1: carregar_produtos("Camisa"); break;
-        case 2: carregar_produtos("Bermuda"); break;
-        case 3: carregar_produtos("Calçado"); break;
-        case 4: carregar_produtos("Acessório"); break;
-        case 5: terminar(); break;
-    }
-}
-
-static void carregar_catalago()
-{
-    imprimir_menu();
-    int entrada = pegar_entrada();
-    gerenciador_catalago(entrada);
-    iniciar_opcs_catalago();
-}
-
-static void iniciar_fluxo()
-{
-    while (1)
-    {
-        carregar_catalago();
-    }
+        imprimir_menu();
+        opcao = pegar_entrada("Digite a opção desejada: ");
+        switch (opcao)
+        {
+            case 1: exibir_categoria("Camisa"); break;
+            case 2: exibir_categoria("Bermuda"); break;
+            case 3: exibir_categoria("Calçado"); break;
+            case 4: exibir_categoria("Acessório"); break;
+            case 5: terminar(); break;
+            default: printf("Opção inválida. Tente novamente.\n");
+        }
+    } while (1);
 }
 
 void iniciar_loja()
 {
-    iniciar_fluxo();
+    gerenciar_menu();
 }

@@ -4,12 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-void terminar()
-{
-    printf("Obrigado por utilizar a Fein Store!\n");
-    exit(1);
-}
+#include <math.h>
 
 void limpar_terminal()
 {
@@ -20,10 +15,16 @@ void limpar_terminal()
     #endif
 }
 
-static FILE* ler_arquivo(char *caminho_arquivo)
+void terminar()
+{
+    printf("Obrigado por utilizar a Fein Store!\n");
+    exit(EXIT_SUCCESS);
+}
+
+static FILE* carregar_banco_de_dados(const char *caminho_arquivo)
 {
     FILE *arquivo = fopen(caminho_arquivo, "r");
-    if (arquivo == NULL)
+    if (!arquivo)
     {
         perror("Erro ao abrir o arquivo");
         exit(EXIT_FAILURE);
@@ -31,77 +32,107 @@ static FILE* ler_arquivo(char *caminho_arquivo)
     return arquivo;
 }
 
-static int categoria_correspondente(char *produto, char *categoria)
+static int categoria_correspondente(const char *produto, const char *categoria)
 {
-    char copia_produto[100];
-    strncpy(copia_produto, produto, sizeof(copia_produto));
-    char *campo = strtok(copia_produto, ",");
-    int coluna = 1;
+    char copia[100];
+    strncpy(copia, produto, sizeof(copia));
+    copia[sizeof(copia) - 1] = '\0';
 
-    while (campo != NULL)
+    char *token = strtok(copia, ",");
+    for (int coluna = 1; token != NULL; coluna++)
     {
-        if (coluna == 3)
+        if (coluna == 3 & strcmp(token, categoria) == 0)
         {
-            return (strcmp(campo, categoria) == 0); // Retorna true se for a categoria correspondente.
+            return 1;
         }
-        campo = strtok(NULL, ",");
-        coluna++;
+        token = strtok(NULL, ",");
     }
-    return 1;
+    return 0;
 }
 
-static Produto* criar_novo_produto_e_adcionar(char *info, ListaProdutos *lista_produtos)
+static Produto* criar_novo_produto_e_adcionar_lista(const char *linha, int id, ListaProdutos *lista_produtos)
 {
-    Produto *produto = criar_produto(info);
-    adcionar_produto(lista_produtos, produto);
+    Produto *novo_produto = criar_produto(linha, id);
+    adcionar_produto(lista_produtos, novo_produto);
 }
 
-static void processar_linha_arquivo(ListaProdutos *lista_produtos, FILE *arquivo, char *categoria)
+static void processar_produtos_banco_de_dados(ListaProdutos *lista_produtos, FILE *arquivo, const char *categoria)
 {
-    char info[100];
-    while(fgets(info, sizeof(info), arquivo))
+    char linha[100];
+    int id = 0;
+
+    while(fgets(linha, sizeof(linha), arquivo))
     {
-        if (categoria_correspondente(info, categoria))
+        if (categoria_correspondente(linha, categoria))
         {
-            criar_novo_produto_e_adcionar(info, lista_produtos);
+            criar_novo_produto_e_adcionar_lista(linha, id++, lista_produtos);
         }
     }
 }
 
-ListaProdutos pegar_produtos_por_categoria(char *categoria)
+ListaProdutos pegar_produtos_por_categoria(const char *categoria)
 {
+    FILE *arquivo = carregar_banco_de_dados("data/database.csv");
     ListaProdutos lista_produtos;
-    FILE *arquivo = ler_arquivo("data/database.csv");
     inicializar_lista(&lista_produtos);
-    processar_linha_arquivo(&lista_produtos, arquivo, categoria);
+
+    processar_produtos_banco_de_dados(&lista_produtos, arquivo, categoria);
     fclose(arquivo);
+
     return lista_produtos;
 }
 
-int pegar_entrada()
+int pegar_entrada_personalizada(const char *mensagem, int entradas_validas[], int num_entradas)
 {
     int entrada;
-    do
+    while (1)
     {
+        printf("%s ", mensagem);
+
+        if (scanf("%d", &entrada) != 1)
+        {
+            printf("Entrada inválida. Por favor, insira um número.\n");
+            while (getchar() != '\n');
+            continue;
+        }
+
+        for (int i = 0; i < num_entradas; i++)
+        {
+            if (entrada == entradas_validas[i])
+            {
+                return entrada;
+            }
+        }
+
+        printf("Opção inválida. Tente novamente.\n");
+    }
+}
+
+int pegar_entrada(const char *mensagem)
+{
+    int entrada;
+    while (1)
+    {
+        printf("%s ", mensagem);
+
         if (scanf("%d", &entrada) == 1)
         {
             return entrada;
         }
-        else
+
+        printf("Entrada inválida. Por favor, insira um número.\n");
+        while (getchar() != '\n');
+    }
+}
+
+Produto *buscar_produto(int id, ListaProdutos *produtos)
+{
+    for (size_t i = 0; i < produtos->tamanho; i++)
+    {
+        Produto *produto = produtos->produtos[i];
+        if (produto->id == id)
         {
-            printf("Entrada inválida. Tente novamente.\n");
-            printf("Qual a opção desejada? ");
-            while(getchar() != '\n');
+            return produto;
         }
-    } while (1);
-}
-
-static void verficar_forma_pagamento()
-{
-    return;
-}
-
-void efetuar_compra()
-{
-    verficar_forma_pagamento();
+    }
 }
