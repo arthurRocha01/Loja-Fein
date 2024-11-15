@@ -6,8 +6,7 @@
 #include <string.h>
 #include <math.h>
 
-void limpar_terminal()
-{
+void limpar_terminal() {
     #if defined(_WIN32) || defined(_WIN64)
     system("cls");
     #else
@@ -15,34 +14,23 @@ void limpar_terminal()
     #endif
 }
 
-void terminar()
-{
+void terminar() {
     printf("Obrigado por utilizar a Fein Store!\n");
     exit(EXIT_SUCCESS);
 }
 
-static FILE* carregar_banco_de_dados(const char *caminho_arquivo)
-{
+static FILE* carregar_banco_de_dados(const char *caminho_arquivo) {
     FILE *arquivo = fopen(caminho_arquivo, "r");
-    if (!arquivo)
-    {
-        perror("Erro ao abrir o arquivo");
-        exit(EXIT_FAILURE);
-    }
     return arquivo;
 }
 
-static int categoria_correspondente(const char *produto, const char *categoria)
-{
+static int categoria_correspondente(const char *produto, const char *categoria) {
     char copia[100];
     strncpy(copia, produto, sizeof(copia));
     copia[sizeof(copia) - 1] = '\0';
-
     char *token = strtok(copia, ",");
-    for (int coluna = 1; token != NULL; coluna++)
-    {
-        if (coluna == 3 & strcmp(token, categoria) == 0)
-        {
+    for (int coluna = 1; token != NULL; coluna++) {
+        if (coluna == 3 & strcmp(token, categoria) == 0) {
             return 1;
         }
         token = strtok(NULL, ",");
@@ -50,28 +38,23 @@ static int categoria_correspondente(const char *produto, const char *categoria)
     return 0;
 }
 
-static Produto* criar_novo_produto_e_adcionar_lista(const char *linha, int id, ListaProdutos *lista_produtos)
-{
+static Produto* criar_novo_produto_e_adcionar_lista(const char *linha, int id, ListaProdutos *lista_produtos) {
     Produto *novo_produto = criar_produto(linha, id);
     adcionar_produto(lista_produtos, novo_produto);
 }
 
-static void processar_produtos_banco_de_dados(ListaProdutos *lista_produtos, FILE *arquivo, const char *categoria)
-{
+static void processar_produtos_banco_de_dados(ListaProdutos *lista_produtos, FILE *arquivo, const char *categoria) {
     char linha[100];
     int id = 0;
 
-    while(fgets(linha, sizeof(linha), arquivo))
-    {
-        if (categoria_correspondente(linha, categoria))
-        {
+    while(fgets(linha, sizeof(linha), arquivo)) {
+        if (categoria_correspondente(linha, categoria)) {
             criar_novo_produto_e_adcionar_lista(linha, id++, lista_produtos);
         }
     }
 }
 
-ListaProdutos pegar_produtos_por_categoria(const char *categoria)
-{
+ListaProdutos pegar_produtos_por_categoria(const char *categoria) {
     FILE *arquivo = carregar_banco_de_dados("data/database.csv");
     ListaProdutos lista_produtos;
     inicializar_lista(&lista_produtos);
