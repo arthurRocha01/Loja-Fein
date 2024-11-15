@@ -9,6 +9,7 @@
 // Definições de cores e estilos para o terminal
 #define RESET "\033[0m"
 #define BOLD "\033[1m"
+#define UNDERLINE "\033[4m"
 #define RED "\033[31m"
 #define GREEN "\033[32m"
 #define YELLOW "\033[33m"
@@ -17,120 +18,94 @@
 #define CYAN "\033[36m"
 #define WHITE "\033[37m"
 #define BG_BLUE "\033[44m"
+#define BG_GREEN "\033[42m"
+#define LINHA_BORDA "\033[34m"
+#define ESPACO_COLUNA 30
 
-static void limpar_terminal()
-{
-    printf("\033[H\033[J"); // Move o cursor para o topo e limpa o terminal
+static void limpar_terminal() {
+    printf("\033[H\033[J");
 }
 
-static void imprimir_cabecalho_menu()
-{
-    printf("\n%s%s++++++++   -- FEIN --   ++++++++%s\n\n", BG_BLUE, WHITE, RESET);
+static void imprimir_cabecalho(const char *titulo) {
+    printf("\n%s%s+--------------------------------------+%s\n", LINHA_BORDA, BOLD, RESET);
+    printf("%s%s|%s%-38s%s|%s\n", LINHA_BORDA, BOLD, RESET, titulo, BOLD, RESET);
+    printf("%s%s+--------------------------------------+%s\n\n", LINHA_BORDA, BOLD, RESET);
 }
 
-static void imprimir_cabecalho_compra()
-{
-    printf("\n%s%s++++++++   -- FEIN agradece sua compra! --   ++++++++%s\n\n", BG_BLUE, WHITE, RESET);
-}
-
-void imprimir_menu()
-{
-    imprimir_cabecalho_menu();
-    printf("%sEscolha uma opção:%s\n", BOLD, RESET);
-    printf("%s1.%s Camisas\n", GREEN, RESET);
-    printf("%s2.%s Bermudas\n", GREEN, RESET);
-    printf("%s3.%s Calçados\n", GREEN, RESET);
-    printf("%s4.%s Acessórios\n", GREEN, RESET);
-    printf("%s5.%s Sair\n", RED, RESET);
-}
-
-void imprimir_opcaos_produto()
-{
-    imprimir_cabecalho_menu();
-    printf("%s1.%s Ver produto\n", GREEN, RESET);
-    printf("%s2.%s Voltar\n", YELLOW, RESET);
-}
-
-void imprimir_produto(Produto *produto)
-{
-    printf("\nID: %d", produto->id);
-    printf("\nMarca: %s", produto->marca);
-    printf("\nNome: %s", produto->nome);
-    printf("\nCategoria: %s", produto->categoria);
-    printf("\nCor: %s", produto->cor);
-    printf("\nTamanho: %s", produto->tamanhos);
-    printf("\nPreço: R$ %.2f", produto->valor);
-    printf("\nQuantidade em estoque: %d\n", produto->quantidade);
-}
-
-void imprimir_compra(const char *mensagem, Produto *produto)
-{
+void mostrar_menu() {
     limpar_terminal();
-    imprimir_cabecalho_compra();
-    printf("\n%s%s%s\n", BOLD, mensagem, RESET);
-    printf("+--------------------------------------+\n");
-    printf("| %sMarca:%s %s\n", BOLD, RESET, produto->marca);
-    printf("| %sNome:%s %s\n", BOLD, RESET, produto->nome);
-    printf("| %sCategoria:%s %s\n", BOLD, RESET, produto->categoria);
-    printf("| %sCor:%s %s\n", BOLD, RESET, produto->cor);
-    printf("| %sTamanho:%s %s\n", BOLD, RESET, produto->tamanhos);
-    printf("| %sPreço:%s R$ %.2f\n", BOLD, RESET, produto->valor);
-    printf("+--------------------------------------+\n");
-    sleep(2);
+    imprimir_cabecalho("  MENU PRINCIPAL  ");
+    printf("%sEscolha uma opção:%s\n\n", BOLD, RESET);
+    printf("%s[1]%s Camisas\n", GREEN, RESET);
+    printf("%s[2]%s Bermudas\n", GREEN, RESET);
+    printf("%s[3]%s Calçados\n", GREEN, RESET);
+    printf("%s[4]%s Acessórios\n", GREEN, RESET);
+    printf("%s[5]%s Sair\n", RED, RESET);
+    printf("\n%sDigite sua escolha: %s", CYAN, RESET);
 }
 
-#define LINHA_BORDA "\033[34m" // Azul para borda
-#define RESET "\033[0m"         // Reset de cor
-#define BOLD "\033[1m"          // Negrito
+static void mostrar_opcoes(int tipo) {
+    imprimir_cabecalho("  OPÇÕES  ");
+    if (tipo == 0) printf("%s[1]%s Ver produto\n", GREEN, RESET);
+    if (tipo == 1) printf("%s[1]%s Comprar\n", GREEN, RESET);
+    printf("%s[2]%s Voltar\n", YELLOW, RESET);
+    printf("\n%sDigite sua escolha: %s", CYAN, RESET);
+}
 
-#define LINHA_BORDA "\033[34m"  // Azul para borda
-#define RESET "\033[0m"         // Reset de cor
-#define BOLD "\033[1m"          // Negrito
-#define ESPACO_COLUNA 30        // Definindo a largura das colunas
-
-#define LINHA_BORDA "\033[34m"  // Azul para borda
-#define RESET "\033[0m"         // Reset de cor
-#define BOLD "\033[1m"          // Negrito
-#define ESPACO_COLUNA 30        // Definindo a largura das colunas
-
-void imprimir_produtos(ListaProdutos *lista)
-{
+void mostrar_categoria(ListaProdutos *lista) {
     limpar_terminal();
-    imprimir_cabecalho_menu();
-    printf("%s%sProdutos disponíveis:%s\n\n", BOLD, BG_BLUE, RESET);
+    imprimir_cabecalho("  PRODUTOS DISPONÍVEIS  ");
+    printf("%sEscolha um produto pelo ID ou volte ao menu anterior.%s\n\n", BOLD, RESET);
 
-    const int produtos_por_linha = 2; // Dois produtos por linha
-    const int colunas = 2; // Duas colunas de produtos
-
-    for (size_t i = 0; i < lista->tamanho; i++)
-    {
+    const int colunas = 2;
+    for (size_t i = 0; i < lista->tamanho; i++) {
         Produto *produto = lista->produtos[i];
-
-        // Estilizando a borda de cada produto
-        if (i % colunas == 0)
-            printf("\n");
-
-        // Estilizando a borda superior
-        printf("%s+----------------------------------------+%s", LINHA_BORDA, RESET);
-
-        // Exibe ID e Nome centralizado dentro da mesma coluna, com negrito
-        printf("\n%sID: %-3d  Nome: %-25s%s", BOLD, produto->id, produto->nome, RESET);
-
-        // Fechando a borda após as informações
-        printf("\n%s+----------------------------------------+%s", LINHA_BORDA, RESET);
-
-        // Adiciona espaçamento entre os dois produtos na mesma linha
-        if ((i + 1) % produtos_por_linha == 0 || i == lista->tamanho - 1)
-        {
-            // Quando a linha estiver cheia, vai para a próxima linha
-            printf("\n");
-        }
-        else
-        {
-            // Espaço entre as duas colunas, ajustando para garantir centralização
-            printf("%*s", ESPACO_COLUNA, ""); // Espaço entre as colunas
+        if (i % colunas == 0) printf("\n");
+        printf("%s+----------------------------+%s", LINHA_BORDA, RESET);
+        printf("\n%sID:%s %-3d  %sNome:%s %-15s", BOLD, RESET, produto->id, BOLD, RESET, produto->nome);
+        printf("\n%s+----------------------------+%s", LINHA_BORDA, RESET);
+        if ((i + 1) % colunas != 0 && i != lista->tamanho - 1) {
+            printf("%*s", ESPACO_COLUNA, "");
         }
     }
+    mostrar_opcoes(0);
+}
 
-    printf("%sEscolha um produto pelo ID ou volte ao menu anterior.%s\n", CYAN, RESET);
+void mostrar_mensagem(const char *mensagem) {
+    printf("%s%s%s", CYAN, mensagem, RESET);
+}
+
+static void congelar_tela(int tempo) {
+    sleep(tempo);
+}
+
+void mostrar_produto(Produto *produto) {
+    limpar_terminal();
+    imprimir_cabecalho("  DETALHES DO PRODUTO  ");
+    printf("%sID:%s %d\n", BOLD, RESET, produto->id);
+    printf("%sMarca:%s %s\n", BOLD, RESET, produto->marca);
+    printf("%sNome:%s %s\n", BOLD, RESET, produto->nome);
+    printf("%sCategoria:%s %s\n", BOLD, RESET, produto->categoria);
+    printf("%sCor:%s %s\n", BOLD, RESET, produto->cor);
+    printf("%sTamanho:%s %s\n", BOLD, RESET, produto->tamanhos);
+    printf("%sPreço:%s R$ %.2f\n", BOLD, RESET, produto->valor);
+    printf("%sQuantidade em estoque:%s %d\n", BOLD, RESET, produto->quantidade);
+    printf("\n%sPressione qualquer tecla para continuar...%s", YELLOW, RESET);
+    congelar_tela(2);
+    mostrar_opcoes(1);
+}
+
+void mostrar_compra(const char *mensagem, Produto *produto) {
+    imprimir_cabecalho("  COMPRA REALIZADA  ");
+    printf("%s%s%s\n\n", BOLD, mensagem, RESET);
+    printf("%s+--------------------------------------+%s\n", BG_GREEN, RESET);
+    printf("| %sMarca:%s %-28s |\n", BOLD, RESET, produto->marca);
+    printf("| %sNome:%s %-29s |\n", BOLD, RESET, produto->nome);
+    printf("| %sCategoria:%s %-24s |\n", BOLD, RESET, produto->categoria);
+    printf("| %sCor:%s %-30s |\n", BOLD, RESET, produto->cor);
+    printf("| %sTamanho:%s %-26s |\n", BOLD, RESET, produto->tamanhos);
+    printf("| %sPreço:%s R$ %-26.2f |\n", BOLD, RESET, produto->valor);
+    printf("%s+--------------------------------------+%s\n\n", BG_GREEN, RESET);
+    printf("%sObrigado por comprar com a FEIN!%s\n", CYAN, RESET);
+    congelar_tela(2);
 }

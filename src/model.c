@@ -65,57 +65,41 @@ ListaProdutos pegar_produtos_por_categoria(const char *categoria) {
     return lista_produtos;
 }
 
-int pegar_entrada_personalizada(const char *mensagem, int entradas_validas[], int num_entradas)
-{
+static int pegar_entrada_personalizada(int entradas_validas[], int num_entradas) {
     int entrada;
-    while (1)
-    {
-        printf("%s ", mensagem);
-
-        if (scanf("%d", &entrada) != 1)
-        {
+    while (1) {
+        if (scanf("%d", &entrada) != 1) {
             printf("Entrada inválida. Por favor, insira um número.\n");
             while (getchar() != '\n');
             continue;
         }
 
-        for (int i = 0; i < num_entradas; i++)
-        {
-            if (entrada == entradas_validas[i])
-            {
+        for (int i = 0; i < num_entradas; i++) {
+            if (entrada == entradas_validas[i]) {
                 return entrada;
             }
         }
-
         printf("Opção inválida. Tente novamente.\n");
     }
 }
 
-int pegar_entrada(const char *mensagem)
-{
+int pegar_opcao() {
+    int opcoes[] = {1, 2};
+    return pegar_entrada_personalizada(opcoes, sizeof(opcoes) / sizeof(opcoes[0]));
+}
+
+int pegar_entrada() {
     int entrada;
-    while (1)
-    {
-        printf("%s ", mensagem);
-
-        if (scanf("%d", &entrada) == 1)
-        {
-            return entrada;
-        }
-
+    while (1) {
+        if (scanf("%d", &entrada) == 1) return entrada;
         printf("Entrada inválida. Por favor, insira um número.\n");
         while (getchar() != '\n');
     }
 }
 
-Produto *buscar_produto(int id, ListaProdutos *produtos)
-{
-    for (size_t i = 0; i < produtos->tamanho; i++)
-    {
+Produto *buscar_produto(int id, ListaProdutos *produtos) {
+    for (size_t i = 0; i < produtos->tamanho; i++) {
         Produto *produto = produtos->produtos[i];
-        if (produto->id == id)
-        {
-            return produto;
-        }
+        if (produto->id == id) return produto;
     }
 }

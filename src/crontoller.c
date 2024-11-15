@@ -8,67 +8,63 @@
 
 typedef enum {
     MENU,
-    VISUALIZAR_PRODUTOS
+    VISUALIZAR_PRODUTOS,
+    CAIXA
 } Sessao;
 
 Sessao sessao_atual = MENU;
 ListaProdutos produtos;
 
 void static gerenciar_menu();
+void static gerenciar_caixa(Produto *produto);
 void static escolher_produto();
 
-static void alternar_sessao(Sessao nova_sessao) {
+static void alternar_sessao(Sessao nova_sessao, Produto *produto) {
     sessao_atual = nova_sessao;
     if (nova_sessao == MENU) gerenciar_menu();
     if (nova_sessao == VISUALIZAR_PRODUTOS) escolher_produto();
+    if (nova_sessao == CAIXA) gerenciar_caixa(produto);
 }
 
-static void exibir_produto(Produto *produto)
-{
+static void gerenciar_caixa(Produto *produto) {
+    if (produto) {
+        int opc = pegar_opcao();
+        if (opc == 1) printf("Produto comprado com sucesso!\n");
+        if (opc == 2) alternar_sessao(MENU, NULL);
+    }
+}
+
+static void exibir_produto(Produto *produto) {
     if (!produto) {
         printf("Nenhum produto encontrado.\n");
         return;
     }
-    imprimir_produto(produto);
+    mostrar_produto(produto);
 }
 
 static Produto* selecionar_produto() {
-    int id = pegar_entrada("Digite o ID do produto desejado: ");
+    mostrar_mensagem("Digite o ID do produto escolhido: ");
+    int id = pegar_entrada();
     Produto *produto = buscar_produto(id, &produtos);
     exibir_produto(produto);
-    if (produto) {
-        int entradas_validas[] = {1, 2};
-        int opc = pegar_entrada_personalizada("1. Comprar\n2. Voltar\nEscolha uma opção: ", entradas_validas, sizeof(entradas_validas));
-        if (opc == 1) printf("Produto comprado com sucesso!\n");
-        if (opc == 2) alternar_sessao(MENU);
-    }
-}
-
-static void visualizar_produtos() {
-    imprimir_produtos(&produtos);
-    int entradas_validas[] = {1, 2};
-    int opcao = pegar_entrada_personalizada("1. Selecionar Produto\n2. Voltar ao Menu\nEscolha: ", entradas_validas, sizeof(entradas_validas));
-    if (opcao == 1) selecionar_produto();
-    else alternar_sessao(MENU);
+    alternar_sessao(CAIXA, produto);
 }
 
 static void escolher_produto() {
-    imprimir_opcaos_produto();
-    visualizar_produtos();
+    int opcao = pegar_opcao();
+    if (opcao == 1) selecionar_produto();
+    else alternar_sessao(MENU, NULL);
 }
 
-static void selecionar_categoria(const char *categoria)
-{
+static void selecionar_categoria(const char *categoria) {
     produtos = pegar_produtos_por_categoria(categoria);
-    imprimir_produtos(&produtos);
-    if (produtos.tamanho == 0) alternar_sessao(MENU);
-    else alternar_sessao(VISUALIZAR_PRODUTOS);
+    mostrar_categoria(&produtos);
+    alternar_sessao(VISUALIZAR_PRODUTOS, NULL);
 }
 
-static void gerenciar_menu()
-{
-    imprimir_menu();
-    int opcao = pegar_entrada("Digite a opção desejada: ");
+static void gerenciar_menu() {
+    mostrar_menu();
+    int opcao = pegar_entrada();
     switch (opcao) {
         case 1: selecionar_categoria("Camisa"); break;
         case 2: selecionar_categoria("Bermuda"); break;
@@ -79,7 +75,6 @@ static void gerenciar_menu()
     }
 }
 
-void iniciar_sessao()
-{
-    alternar_sessao(MENU);
+void iniciar_sessao() {
+    alternar_sessao(MENU, NULL);
 }
