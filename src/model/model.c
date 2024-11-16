@@ -6,22 +6,35 @@
 #include <string.h>
 #include <math.h>
 
-void limpar_terminal() {
-    #if defined(_WIN32) || defined(_WIN64)
-    system("cls");
-    #else
-    system("clear");
-    #endif
-}
-
 void terminar() {
     printf("Obrigado por utilizar a Fein Store!\n");
     exit(EXIT_SUCCESS);
 }
 
-static FILE* carregar_banco_de_dados(const char *caminho_arquivo) {
+static FILE* carregar_arquivo(const char *caminho_arquivo) {
     FILE *arquivo = fopen(caminho_arquivo, "r");
     return arquivo;
+}
+
+Produto*** carregar_banco_dados() {
+    FILE *arquivo = carregar_arquivo("data/database.csv");
+    Produto*** tabela = carregar_tabela_produtos(arquivo, 10, 10);
+
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            if (tabela[i][j] != NULL) {
+                printf("%s ", tabela[i][j]->nome);
+                printf("%s\n", tabela[i][j]->cor);
+            } else {
+                printf("NULL\n");
+            }
+        }
+    }
+}
+
+static Produto* criar_novo_produto_e_adcionar_lista(const char *linha, int id, ListaProdutos *lista_produtos) {
+    Produto *novo_produto = criar_produto(linha, id);
+    adcionar_produto(lista_produtos, novo_produto);
 }
 
 static int categoria_correspondente(const char *produto, const char *categoria) {
@@ -38,11 +51,6 @@ static int categoria_correspondente(const char *produto, const char *categoria) 
     return 0;
 }
 
-static Produto* criar_novo_produto_e_adcionar_lista(const char *linha, int id, ListaProdutos *lista_produtos) {
-    Produto *novo_produto = criar_produto(linha, id);
-    adcionar_produto(lista_produtos, novo_produto);
-}
-
 static void processar_produtos_banco_de_dados(ListaProdutos *lista_produtos, FILE *arquivo, const char *categoria) {
     char linha[100];
     int id = 0;
@@ -55,7 +63,7 @@ static void processar_produtos_banco_de_dados(ListaProdutos *lista_produtos, FIL
 }
 
 ListaProdutos pegar_produtos_por_categoria(const char *categoria) {
-    FILE *arquivo = carregar_banco_de_dados("data/database.csv");
+    FILE *arquivo = carregar_arquivo("data/database.csv");
     ListaProdutos lista_produtos;
     inicializar_lista(&lista_produtos);
 

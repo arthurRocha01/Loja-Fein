@@ -1,6 +1,7 @@
 #include "structs.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 static void definir_atributos_produto(Produto *produto, char *valor, int id, int atributo) {
     produto->id = id;
@@ -34,6 +35,35 @@ float liberar_produto(Produto *produto) {
     free(produto->cor);
     free(produto->tamanhos);
     free(produto);
+}
+
+static Produto*** preencher_tabela_produtos(Produto*** tabela, FILE *arquivo, int linhas, int colunas) {
+    char buffer[100];
+    int id = 0;
+
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            if (fgets(buffer, sizeof(buffer), arquivo) != NULL) {
+                Produto *produto = criar_produto(buffer, id++);
+                tabela[i][j] = produto;
+            } else {
+                tabela[i][j] = NULL;
+            }
+        }
+    }
+    return tabela;
+}
+
+static Produto*** montar_tabela_produtos(FILE *arquivo, int linhas, int colunas) {
+    Produto*** tabela = malloc(linhas * sizeof(Produto**));
+    for (int i = 0; i < linhas; i++) tabela[i] = malloc(colunas * sizeof(Produto*));
+    preencher_tabela_produtos(tabela, arquivo, linhas, colunas);
+    return tabela;
+}
+
+Produto*** carregar_tabela_produtos(FILE *arquivo, int linhas, int colunas) {
+    Produto ***tabela = montar_tabela_produtos(arquivo, linhas, colunas);
+    return tabela;
 }
 
 void inicializar_lista(ListaProdutos *lista) {

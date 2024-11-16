@@ -8,12 +8,13 @@
 
 typedef enum {
     MENU,
-    VISUALIZAR_PRODUTOS,
+    PRODUTO,
     CAIXA
 } Sessao;
 
 Sessao sessao_atual = MENU;
 ListaProdutos produtos;
+Produto*** tabela;
 
 void static gerenciar_menu();
 void static gerenciar_caixa(Produto *produto);
@@ -22,7 +23,7 @@ void static escolher_produto();
 static void alternar_sessao(Sessao nova_sessao, Produto *produto) {
     sessao_atual = nova_sessao;
     if (nova_sessao == MENU) gerenciar_menu();
-    if (nova_sessao == VISUALIZAR_PRODUTOS) escolher_produto();
+    if (nova_sessao == PRODUTO) escolher_produto();
     if (nova_sessao == CAIXA) gerenciar_caixa(produto);
 }
 
@@ -57,9 +58,10 @@ static void escolher_produto() {
 }
 
 static void selecionar_categoria(const char *categoria) {
+    tabela = carregar_banco_dados();
     produtos = pegar_produtos_por_categoria(categoria);
     mostrar_categoria(&produtos);
-    alternar_sessao(VISUALIZAR_PRODUTOS, NULL);
+    alternar_sessao(PRODUTO, NULL);
 }
 
 static void gerenciar_menu() {

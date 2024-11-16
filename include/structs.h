@@ -2,7 +2,7 @@
 #define STRUCTS_H
 
 #include <stddef.h>
-
+#include <stdio.h>
 
 typedef struct {
     int id;
@@ -16,6 +16,12 @@ typedef struct {
 } Produto;
 
 typedef struct {
+    Produto ***dados;
+    int linhas;
+    int colunas;
+} TabelaProdutos;
+
+typedef struct {
     Produto **produtos;
     size_t tamanho;
     size_t capacidade;
@@ -26,5 +32,6 @@ void adcionar_produto(ListaProdutos *lista, Produto *produto);
 void liberar_lista(ListaProdutos *lista);
 
 Produto *criar_produto(char *info, int id);
+Produto*** carregar_tabela_produtos(FILE *arquivo, int linhas, int colunas);
 
 #endif
