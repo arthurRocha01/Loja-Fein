@@ -37,32 +37,40 @@ float liberar_produto(Produto *produto) {
     free(produto);
 }
 
-static Produto*** preencher_tabela_produtos(Produto*** tabela, FILE *arquivo, int linhas, int colunas) {
-    char buffer[100];
-    int id = 0;
+static TabelaProdutos* montar_tabela_produtos(FILE *arquivo, int linhas, int colunas) {
+    TabelaProdutos *tabela = malloc(sizeof(TabelaProdutos));
+    tabela->dados = malloc(linhas * sizeof(Produto**));
+    tabela->linhas = linhas;
+    tabela->colunas = colunas;
+    tabela->tamanho = 0;
 
     for (int i = 0; i < linhas; i++) {
+        tabela->dados[i] = malloc(colunas *sizeof(Produto*));
         for (int j = 0; j < colunas; j++) {
-            if (fgets(buffer, sizeof(buffer), arquivo) != NULL) {
-                Produto *produto = criar_produto(buffer, id++);
-                tabela[i][j] = produto;
-            } else {
-                tabela[i][j] = NULL;
-            }
+            tabela->dados[i][j] = NULL;
         }
     }
     return tabela;
 }
 
-static Produto*** montar_tabela_produtos(FILE *arquivo, int linhas, int colunas) {
-    Produto*** tabela = malloc(linhas * sizeof(Produto**));
-    for (int i = 0; i < linhas; i++) tabela[i] = malloc(colunas * sizeof(Produto*));
-    preencher_tabela_produtos(tabela, arquivo, linhas, colunas);
-    return tabela;
+static void preencher_tabela_produtos(TabelaProdutos *tabela, FILE *arquivo) {
+    char buffer[100];
+    int id = 0;
+
+    for (int i = 0; i < tabela->linhas; i++) {
+        for (int j = 0; j < tabela->colunas; j++) {
+            if (fgets(buffer, sizeof(buffer), arquivo) != NULL) {
+                Produto *produto = criar_produto(buffer, id++);
+                tabela->dados[i][j] = produto;
+                tabela->tamanho++;
+            }
+        }
+    }
 }
 
-Produto*** carregar_tabela_produtos(FILE *arquivo, int linhas, int colunas) {
-    Produto ***tabela = montar_tabela_produtos(arquivo, linhas, colunas);
+TabelaProdutos* carregar_tabela_produtos(FILE *arquivo, int linhas, int colunas) {
+    TabelaProdutos *tabela = montar_tabela_produtos(arquivo, linhas, colunas);
+    preencher_tabela_produtos(tabela, arquivo);
     return tabela;
 }
 

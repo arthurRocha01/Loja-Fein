@@ -16,58 +16,34 @@ static FILE* carregar_arquivo(const char *caminho_arquivo) {
     return arquivo;
 }
 
-Produto*** carregar_banco_dados() {
-    FILE *arquivo = carregar_arquivo("data/database.csv");
-    Produto*** tabela = carregar_tabela_produtos(arquivo, 10, 10);
+static int verificar_categoria_correspondente(Produto *produto, const char *categoria) {
+    if (strcmp(produto->categoria, categoria) == 0) return 1;
+    else return 0;
+}
 
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 10; j++) {
-            if (tabela[i][j] != NULL) {
-                printf("%s ", tabela[i][j]->nome);
-                printf("%s\n", tabela[i][j]->cor);
-            } else {
-                printf("NULL\n");
-            }
+static void adcionar_produto_a_lista(ListaProdutos *lista_produtos, Produto *produto, const char *categoria) {
+    if (verificar_categoria_correspondente(produto, categoria)) {
+        adcionar_produto(lista_produtos, produto);
+    }
+}
+
+static void processar_produtos_banco_de_dados(TabelaProdutos *tabela_produtos, ListaProdutos *lista_produtos, FILE *arquivo, const char *categoria) {
+    for (int i = 0; i < tabela_produtos->linhas; i++) {
+        for (int j = 0; j < tabela_produtos->colunas; j++) {
+            Produto *produto = tabela_produtos->dados[i][j];
+            adcionar_produto_a_lista(lista_produtos, produto, categoria);
         }
     }
 }
 
-static Produto* criar_novo_produto_e_adcionar_lista(const char *linha, int id, ListaProdutos *lista_produtos) {
-    Produto *novo_produto = criar_produto(linha, id);
-    adcionar_produto(lista_produtos, novo_produto);
-}
-
-static int categoria_correspondente(const char *produto, const char *categoria) {
-    char copia[100];
-    strncpy(copia, produto, sizeof(copia));
-    copia[sizeof(copia) - 1] = '\0';
-    char *token = strtok(copia, ",");
-    for (int coluna = 1; token != NULL; coluna++) {
-        if (coluna == 3 & strcmp(token, categoria) == 0) {
-            return 1;
-        }
-        token = strtok(NULL, ",");
-    }
-    return 0;
-}
-
-static void processar_produtos_banco_de_dados(ListaProdutos *lista_produtos, FILE *arquivo, const char *categoria) {
-    char linha[100];
-    int id = 0;
-
-    while(fgets(linha, sizeof(linha), arquivo)) {
-        if (categoria_correspondente(linha, categoria)) {
-            criar_novo_produto_e_adcionar_lista(linha, id++, lista_produtos);
-        }
-    }
-}
-
-ListaProdutos pegar_produtos_por_categoria(const char *categoria) {
+ListaProdutos pegar_produtos_por_categoria(TabelaProdutos *tabela_produtos, const char *categoria) {
     FILE *arquivo = carregar_arquivo("data/database.csv");
     ListaProdutos lista_produtos;
     inicializar_lista(&lista_produtos);
 
-    processar_produtos_banco_de_dados(&lista_produtos, arquivo, categoria);
+    TabelaProdutos *tabela_produtos = carregar_tabela_produtos(arquivo, 10, 10);
+    processar_produtos_banco_de_dados(tabela_produtos, &lista_produtos, arquivo, categoria);
+
     fclose(arquivo);
 
     return lista_produtos;

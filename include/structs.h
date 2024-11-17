@@ -19,6 +19,7 @@ typedef struct {
     Produto ***dados;
     int linhas;
     int colunas;
+    int tamanho;
 } TabelaProdutos;
 
 typedef struct {
@@ -32,6 +33,6 @@ void adcionar_produto(ListaProdutos *lista, Produto *produto);
 void liberar_lista(ListaProdutos *lista);
 
 Produto *criar_produto(char *info, int id);
-Produto*** carregar_tabela_produtos(FILE *arquivo, int linhas, int colunas);
+TabelaProdutos* carregar_tabela_produtos(FILE *arquivo, int linhas, int colunas);
 
 #endif
