@@ -2,9 +2,7 @@
 #include "model.h"
 #include "view.h"
 #include "structs.h"
-#include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 typedef enum {
     MENU,
@@ -26,6 +24,17 @@ static void alternar_sessao(Sessao nova_sessao, Produto *produto) {
     if (nova_sessao == CAIXA) gerenciar_caixa(produto);
 }
 
+static int obter_opcao(const char *mensagem_aviso, int num_opcoes) {
+    int opcao;
+    while (1) {
+        opcao = pegar_entrada();
+        if (opcao > 0 && opcao <= num_opcoes) {
+            return opcao;
+        }
+        mostrar_mensagem(mensagem_aviso);
+    }
+}
+
 static void efetuar_compra(Produto *produto) {
     comprar_produto(produto);
     printf("Produto comprado com sucesso!\n");
@@ -35,16 +44,16 @@ static void efetuar_compra(Produto *produto) {
 
 static void gerenciar_caixa(Produto *produto) {
     if (produto) {
-        int opc = pegar_entrada();
+    int opc = obter_opcao("\nOpção inválida. Tentenovamente.\nEscolha a opção: ", 2);
         if (opc == 1) efetuar_compra(produto);
         if (opc == 2) alternar_sessao(MENU, NULL);
     }
 }
 
 static void exibir_produto(Produto *produto) {
-    if (!produto) {
-        mostrar_mensagem("Nenhum produto encontrado.\n");
-        return;
+    if (produto == NULL) {
+        mostrar_produto_nao_encontrado();
+        alternar_sessao(MENU, NULL);
     }
     mostrar_produto(produto);
 }
@@ -58,7 +67,7 @@ static Produto* selecionar_produto() {
 }
 
 static void escolher_produto() {
-    int opcao = pegar_entrada();
+    int opcao = obter_opcao("\nOpção inválida. Tentenovamente.\nEscolha a opção: ", 2);
     if (opcao == 1) selecionar_produto();
     else alternar_sessao(MENU, NULL);
 }
@@ -69,16 +78,20 @@ static void selecionar_categoria(const char *categoria) {
     alternar_sessao(PRODUTO, NULL);
 }
 
+static void sair() {
+    mostrar_saida();
+    terminar();
+}
+
 static void gerenciar_menu() {
     mostrar_menu();
-    int opcao = pegar_entrada();
+    int opcao = obter_opcao("\nOpção inválida. Tentenovamente.\nEscolha a opção desejada: ", 5);
     switch (opcao) {
         case 1: selecionar_categoria("Camisa"); break;
         case 2: selecionar_categoria("Bermuda"); break;
         case 3: selecionar_categoria("Calçado"); break;
         case 4: selecionar_categoria("Acessório"); break;
-        case 5: terminar(); break;
-        default: alternar_sessao(MENU, NULL);
+        case 5: sair(); break;
     }
 }
 

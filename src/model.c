@@ -12,7 +12,6 @@ TabelaProdutos *tabela_produtos;
 ListaProdutos *lista_produtos;
 
 void terminar() {
-    printf("Obrigado por utilizar a Fein Store!\n");
     exit(EXIT_SUCCESS);
 }
 
@@ -60,6 +59,7 @@ Produto* buscar_produto(int id, ListaProdutos *produtos) {
         Produto *produto = produtos->produtos[i];
         if (produto->id == id) return produto;
     }
+    return NULL;
 }
 
 static int verificar_produto_correspondente(Produto *produto1, Produto *produto2) {

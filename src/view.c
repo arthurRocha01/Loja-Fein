@@ -92,8 +92,16 @@ void mostrar_produto(Produto *produto) {
     printf("%sTamanho:%s %s\n", BOLD, RESET, produto->tamanhos);
     printf("%sPreço:%s R$ %.2f\n", BOLD, RESET, produto->valor);
     printf("%sQuantidade em estoque:%s %d\n", BOLD, RESET, produto->quantidade);
-    congelar_tela(1.3);
+    congelar_tela(1.5);
     mostrar_opcoes(1);
+}
+
+void mostrar_produto_nao_encontrado() {
+    limpar_terminal();
+    imprimir_cabecalho("  PRODUTO NÃO ENCONTRADO  ");
+    printf("%sNenhum produto encontrado com o ID informado.%s\n", RED, RESET);
+    printf("%sPor favor, tente novamente ou escolha outro produto.%s\n", CYAN, RESET);
+    congelar_tela(3);
 }
 
 void mostrar_compra(Produto *produto) {
@@ -109,4 +117,14 @@ void mostrar_compra(Produto *produto) {
     printf("%s+--------------------------------------+%s\n\n", BG_GREEN, RESET);
     printf("%sObrigado por comprar com a FEIN!%s\n", CYAN, RESET);
     congelar_tela(2);
+}
+
+void mostrar_saida() {
+    limpar_terminal();
+    imprimir_cabecalho("  SAÍDA  ");
+    printf("%s+--------------------------------------+%s\n", BG_BLUE, RESET);
+    printf("| %sObrigado por usar a FEIN Store!    %s|\n", BOLD, RESET);
+    printf("| %sAté logo!                         %s|\n", BOLD, RESET);
+    printf("%s+--------------------------------------+%s\n\n", BG_BLUE, RESET);
+    congelar_tela(1);
 }
