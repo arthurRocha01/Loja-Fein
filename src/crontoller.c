@@ -13,7 +13,7 @@ typedef enum {
 } Sessao;
 
 Sessao sessao_atual = MENU;
-ListaProdutos produtos;
+ListaProdutos *produtos;
 TabelaProdutos *tabela;
 
 void static gerenciar_menu();
@@ -37,7 +37,7 @@ static void gerenciar_caixa(Produto *produto) {
 
 static void exibir_produto(Produto *produto) {
     if (!produto) {
-        printf("Nenhum produto encontrado.\n");
+        mostrar_mensagem("Nenhum produto encontrado.\n");
         return;
     }
     mostrar_produto(produto);
@@ -46,7 +46,7 @@ static void exibir_produto(Produto *produto) {
 static Produto* selecionar_produto() {
     mostrar_mensagem("Digite o ID do produto escolhido: ");
     int id = pegar_entrada();
-    Produto *produto = buscar_produto(id, &produtos);
+    Produto *produto = buscar_produto(id, produtos);
     exibir_produto(produto);
     alternar_sessao(CAIXA, produto);
 }
@@ -59,7 +59,7 @@ static void escolher_produto() {
 
 static void selecionar_categoria(const char *categoria) {
     produtos = pegar_produtos_por_categoria(tabela, categoria);
-    mostrar_categoria(&produtos);
+    mostrar_categoria(produtos);
     alternar_sessao(PRODUTO, NULL);
 }
 
@@ -78,5 +78,4 @@ static void gerenciar_menu() {
 
 void iniciar_sessao() {
     alternar_sessao(MENU, NULL);
-    // carregar_banco_dados();
 }

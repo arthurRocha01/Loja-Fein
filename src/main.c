@@ -2,5 +2,5 @@
 
 int main()
 {
-    iniciar_sessao();
+    iniciar();
 }

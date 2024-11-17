@@ -6,6 +6,10 @@
 #include <string.h>
 #include <math.h>
 
+FILE *arquivo;
+TabelaProdutos *tabela_produtos;
+ListaProdutos *lista_produtos;
+
 void terminar() {
     printf("Obrigado por utilizar a Fein Store!\n");
     exit(EXIT_SUCCESS);
@@ -36,17 +40,24 @@ static void processar_produtos_banco_de_dados(TabelaProdutos *tabela_produtos, L
     }
 }
 
-ListaProdutos pegar_produtos_por_categoria(TabelaProdutos *tabela_produtos, const char *categoria) {
-    FILE *arquivo = carregar_arquivo("data/database.csv");
-    ListaProdutos lista_produtos;
-    inicializar_lista(&lista_produtos);
-
-    TabelaProdutos *tabela_produtos = carregar_tabela_produtos(arquivo, 10, 10);
-    processar_produtos_banco_de_dados(tabela_produtos, &lista_produtos, arquivo, categoria);
-
+static void inicializar_sgd() {
+    arquivo = carregar_arquivo("data/database.csv");
+    inicializar_lista(lista_produtos);
+    carregar_tabela_produtos(arquivo, 10, 10);
     fclose(arquivo);
+}
 
+ListaProdutos* pegar_produtos_por_categoria(TabelaProdutos *tabela_produtos, const char *categoria) {
+    inicializar_sgd();
+    processar_produtos_banco_de_dados(tabela_produtos, &lista_produtos, arquivo, categoria);
     return lista_produtos;
+}
+
+Produto* buscar_produto(int id, ListaProdutos *produtos) {
+    for (size_t i = 0; i < produtos->tamanho; i++) {
+        Produto *produto = produtos->produtos[i];
+        if (produto->id == id) return produto;
+    }
 }
 
 static int pegar_entrada_personalizada(int entradas_validas[], int num_entradas) {
@@ -78,12 +89,5 @@ int pegar_entrada() {
         if (scanf("%d", &entrada) == 1) return entrada;
         printf("Entrada inválida. Por favor, insira um número.\n");
         while (getchar() != '\n');
-    }
-}
-
-Produto *buscar_produto(int id, ListaProdutos *produtos) {
-    for (size_t i = 0; i < produtos->tamanho; i++) {
-        Produto *produto = produtos->produtos[i];
-        if (produto->id == id) return produto;
     }
 }
