@@ -42,18 +42,17 @@ static void processar_produtos_banco_de_dados(TabelaProdutos *tabela_produtos, L
     }
 }
 
-static void inicializar_sgd() {
+ListaProdutos* pegar_produtos_por_categoria(const char *categoria) {
+    processar_produtos_banco_de_dados(tabela_produtos, lista_produtos, arquivo, categoria);
+    return lista_produtos;
+}
+
+void inicializar_sgd() {
     carregar_arquivo("data/database.csv");
     lista_produtos = malloc(sizeof(lista_produtos));
     inicializar_lista(lista_produtos);
     tabela_produtos = carregar_tabela_produtos(arquivo, 10, 10);
     fclose(arquivo);
-}
-
-ListaProdutos* pegar_produtos_por_categoria(const char *categoria) {
-    inicializar_sgd();
-    processar_produtos_banco_de_dados(tabela_produtos, lista_produtos, arquivo, categoria);
-    return lista_produtos;
 }
 
 Produto* buscar_produto(int id, ListaProdutos *produtos) {
@@ -81,34 +80,10 @@ void comprar_produto(Produto *produto) {
     }
 }
 
-static int pegar_entrada_personalizada(int entradas_validas[], int num_entradas) {
-    int entrada;
-    while (1) {
-        if (scanf("%d", &entrada) != 1) {
-            printf("Entrada inválida. Por favor, insira um número.\n");
-            while (getchar() != '\n');
-            continue;
-        }
-
-        for (int i = 0; i < num_entradas; i++) {
-            if (entrada == entradas_validas[i]) {
-                return entrada;
-            }
-        }
-        printf("Opção inválida. Tente novamente.\n");
-    }
-}
-
-int pegar_opcao() {
-    int opcoes[] = {1, 2};
-    return pegar_entrada_personalizada(opcoes, sizeof(opcoes) / sizeof(opcoes[0]));
-}
-
 int pegar_entrada() {
     int entrada;
     while (1) {
         if (scanf("%d", &entrada) == 1) return entrada;
-        printf("Entrada inválida. Por favor, insira um número.\n");
         while (getchar() != '\n');
     }
 }

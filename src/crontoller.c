@@ -29,13 +29,13 @@ static void alternar_sessao(Sessao nova_sessao, Produto *produto) {
 static void efetuar_compra(Produto *produto) {
     comprar_produto(produto);
     printf("Produto comprado com sucesso!\n");
-    mostrar_produto(produto);
-    // alternar_sessao(MENU, NULL);
+    mostrar_compra(produto);
+    alternar_sessao(MENU, NULL);
 }
 
 static void gerenciar_caixa(Produto *produto) {
     if (produto) {
-        int opc = pegar_opcao();
+        int opc = pegar_entrada();
         if (opc == 1) efetuar_compra(produto);
         if (opc == 2) alternar_sessao(MENU, NULL);
     }
@@ -58,7 +58,7 @@ static Produto* selecionar_produto() {
 }
 
 static void escolher_produto() {
-    int opcao = pegar_opcao();
+    int opcao = pegar_entrada();
     if (opcao == 1) selecionar_produto();
     else alternar_sessao(MENU, NULL);
 }
@@ -78,10 +78,11 @@ static void gerenciar_menu() {
         case 3: selecionar_categoria("Calçado"); break;
         case 4: selecionar_categoria("Acessório"); break;
         case 5: terminar(); break;
-        default: printf("Opção inválida. Tente novamente.\n");
+        default: alternar_sessao(MENU, NULL);
     }
 }
 
 void iniciar() {
+    inicializar_sgd();
     alternar_sessao(MENU, NULL);
 }

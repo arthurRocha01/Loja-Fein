@@ -49,7 +49,7 @@ static void mostrar_opcoes(int tipo) {
     if (tipo == 0) printf("%s[1]%s Ver produto\n", GREEN, RESET);
     if (tipo == 1) printf("%s[1]%s Comprar\n", GREEN, RESET);
     printf("%s[2]%s Voltar\n", YELLOW, RESET);
-    printf("\n%sDigite sua escolha: %s", CYAN, RESET);
+    printf("\n%sEsolha a opção: %s", CYAN, RESET);
 }
 
 void mostrar_categoria(ListaProdutos *lista) {
@@ -71,12 +71,14 @@ void mostrar_categoria(ListaProdutos *lista) {
     mostrar_opcoes(0);
 }
 
-void mostrar_mensagem(const char *mensagem) {
-    printf("%s%s%s", CYAN, mensagem, RESET);
+static void congelar_tela(float tempo) {
+    sleep(tempo);
 }
 
-static void congelar_tela(int tempo) {
-    sleep(tempo);
+void mostrar_mensagem(const char* mensagem) {
+    printf("%s", CYAN);
+    printf("%s", mensagem);
+    printf("%s", RESET);
 }
 
 void mostrar_produto(Produto *produto) {
@@ -90,14 +92,13 @@ void mostrar_produto(Produto *produto) {
     printf("%sTamanho:%s %s\n", BOLD, RESET, produto->tamanhos);
     printf("%sPreço:%s R$ %.2f\n", BOLD, RESET, produto->valor);
     printf("%sQuantidade em estoque:%s %d\n", BOLD, RESET, produto->quantidade);
-    printf("\n%sPressione qualquer tecla para continuar...%s", YELLOW, RESET);
-    congelar_tela(2);
+    congelar_tela(1.3);
     mostrar_opcoes(1);
 }
 
-void mostrar_compra(const char *mensagem, Produto *produto) {
+void mostrar_compra(Produto *produto) {
+    limpar_terminal();
     imprimir_cabecalho("  COMPRA REALIZADA  ");
-    printf("%s%s%s\n\n", BOLD, mensagem, RESET);
     printf("%s+--------------------------------------+%s\n", BG_GREEN, RESET);
     printf("| %sMarca:%s %-28s |\n", BOLD, RESET, produto->marca);
     printf("| %sNome:%s %-29s |\n", BOLD, RESET, produto->nome);
