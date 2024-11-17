@@ -37,6 +37,21 @@ float liberar_produto(Produto *produto) {
     free(produto);
 }
 
+static void preencher_tabela_produtos(TabelaProdutos *tabela, FILE *arquivo) {
+    char buffer[100];
+    int id = 0;
+
+    for (int i = 0; i < tabela->linhas; i++) {
+        for (int j = 0; j < tabela->colunas; j++) {
+            if (fgets(buffer, sizeof(buffer), arquivo) != NULL) {
+                Produto *produto = criar_produto(buffer, id++);
+                tabela->dados[i][j] = produto;
+                tabela->tamanho++;
+            }
+        }
+    }
+}
+
 static TabelaProdutos* montar_tabela_produtos(FILE *arquivo, int linhas, int colunas) {
     TabelaProdutos *tabela = malloc(sizeof(TabelaProdutos));
     tabela->dados = malloc(linhas * sizeof(Produto**));
@@ -51,21 +66,6 @@ static TabelaProdutos* montar_tabela_produtos(FILE *arquivo, int linhas, int col
         }
     }
     return tabela;
-}
-
-static void preencher_tabela_produtos(TabelaProdutos *tabela, FILE *arquivo) {
-    char buffer[100];
-    int id = 0;
-
-    for (int i = 0; i < tabela->linhas; i++) {
-        for (int j = 0; j < tabela->colunas; j++) {
-            if (fgets(buffer, sizeof(buffer), arquivo) != NULL) {
-                Produto *produto = criar_produto(buffer, id++);
-                tabela->dados[i][j] = produto;
-                tabela->tamanho++;
-            }
-        }
-    }
 }
 
 TabelaProdutos* carregar_tabela_produtos(FILE *arquivo, int linhas, int colunas) {

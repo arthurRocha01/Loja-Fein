@@ -3,10 +3,11 @@
 
 #include "structs.h"
 
-ListaProdutos* pegar_produtos_por_categoria(TabelaProdutos *tabela_produtos, const char *categoria);
 int pegar_entrada();
 int pegar_opcao();
+ListaProdutos* pegar_produtos_por_categoria(const char *categoria);
 Produto *buscar_produto(int id, ListaProdutos *produtos);
+void comprar_produto(Produto *produto);
 void terminar();
 
 #endif

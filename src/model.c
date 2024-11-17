@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <unistd.h>
 
 FILE *arquivo;
 TabelaProdutos *tabela_produtos;
@@ -16,8 +17,7 @@ void terminar() {
 }
 
 static FILE* carregar_arquivo(const char *caminho_arquivo) {
-    FILE *arquivo = fopen(caminho_arquivo, "r");
-    return arquivo;
+    arquivo = fopen(caminho_arquivo, "r");
 }
 
 static int verificar_categoria_correspondente(Produto *produto, const char *categoria) {
@@ -34,22 +34,25 @@ static void adcionar_produto_a_lista(ListaProdutos *lista_produtos, Produto *pro
 static void processar_produtos_banco_de_dados(TabelaProdutos *tabela_produtos, ListaProdutos *lista_produtos, FILE *arquivo, const char *categoria) {
     for (int i = 0; i < tabela_produtos->linhas; i++) {
         for (int j = 0; j < tabela_produtos->colunas; j++) {
-            Produto *produto = tabela_produtos->dados[i][j];
-            adcionar_produto_a_lista(lista_produtos, produto, categoria);
+            if (tabela_produtos->dados[i][j]) {
+                Produto *produto = tabela_produtos->dados[i][j];
+                adcionar_produto_a_lista(lista_produtos, produto, categoria);
+            }
         }
     }
 }
 
 static void inicializar_sgd() {
-    arquivo = carregar_arquivo("data/database.csv");
+    carregar_arquivo("data/database.csv");
+    lista_produtos = malloc(sizeof(lista_produtos));
     inicializar_lista(lista_produtos);
-    carregar_tabela_produtos(arquivo, 10, 10);
+    tabela_produtos = carregar_tabela_produtos(arquivo, 10, 10);
     fclose(arquivo);
 }
 
-ListaProdutos* pegar_produtos_por_categoria(TabelaProdutos *tabela_produtos, const char *categoria) {
+ListaProdutos* pegar_produtos_por_categoria(const char *categoria) {
     inicializar_sgd();
-    processar_produtos_banco_de_dados(tabela_produtos, &lista_produtos, arquivo, categoria);
+    processar_produtos_banco_de_dados(tabela_produtos, lista_produtos, arquivo, categoria);
     return lista_produtos;
 }
 
@@ -57,6 +60,24 @@ Produto* buscar_produto(int id, ListaProdutos *produtos) {
     for (size_t i = 0; i < produtos->tamanho; i++) {
         Produto *produto = produtos->produtos[i];
         if (produto->id == id) return produto;
+    }
+}
+
+static int verificar_produto_correspondente(Produto *produto1, Produto *produto2) {
+    if (produto1) {
+        if (produto1->id == produto2->id) {
+            return 1;
+        }
+    }
+}
+
+void comprar_produto(Produto *produto) {
+    for (int i = 0; i < tabela_produtos->linhas; i++) {
+        for (int j = 0; j < tabela_produtos->colunas; j++) {
+            if (verificar_produto_correspondente(tabela_produtos->dados[i][j], produto)) {
+                tabela_produtos->dados[i][j]->quantidade -= 1;
+            }
+        }
     }
 }
 

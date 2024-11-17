@@ -14,7 +14,6 @@ typedef enum {
 
 Sessao sessao_atual = MENU;
 ListaProdutos *produtos;
-TabelaProdutos *tabela;
 
 void static gerenciar_menu();
 void static gerenciar_caixa(Produto *produto);
@@ -27,10 +26,17 @@ static void alternar_sessao(Sessao nova_sessao, Produto *produto) {
     if (nova_sessao == CAIXA) gerenciar_caixa(produto);
 }
 
+static void efetuar_compra(Produto *produto) {
+    comprar_produto(produto);
+    printf("Produto comprado com sucesso!\n");
+    mostrar_produto(produto);
+    // alternar_sessao(MENU, NULL);
+}
+
 static void gerenciar_caixa(Produto *produto) {
     if (produto) {
         int opc = pegar_opcao();
-        if (opc == 1) printf("Produto comprado com sucesso!\n");
+        if (opc == 1) efetuar_compra(produto);
         if (opc == 2) alternar_sessao(MENU, NULL);
     }
 }
@@ -58,7 +64,7 @@ static void escolher_produto() {
 }
 
 static void selecionar_categoria(const char *categoria) {
-    produtos = pegar_produtos_por_categoria(tabela, categoria);
+    produtos = pegar_produtos_por_categoria(categoria);
     mostrar_categoria(produtos);
     alternar_sessao(PRODUTO, NULL);
 }
@@ -76,6 +82,6 @@ static void gerenciar_menu() {
     }
 }
 
-void iniciar_sessao() {
+void iniciar() {
     alternar_sessao(MENU, NULL);
 }
