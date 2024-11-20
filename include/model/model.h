@@ -1,7 +1,13 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include "model/structs.h"
+#include "model/manipulador_struct.h"
+#include "model/data_manager.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <unistd.h>
 
 void carregar_banco_dados();
 int pegar_entrada();

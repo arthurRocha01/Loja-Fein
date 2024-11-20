@@ -1,12 +1,4 @@
 #include "model/model.h"
-#include "model/structs.h"
-#include "model/data_manager.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <unistd.h>
 
 extern TabelaProdutos *tabela_produtos;
 

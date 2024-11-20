@@ -1,7 +1,12 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#include "model/structs.h"
+#include "model/manipulador_struct.h"
+#include "view/view.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 void mostrar_menu();
 void mostrar_mensagem(const char* mensagem);

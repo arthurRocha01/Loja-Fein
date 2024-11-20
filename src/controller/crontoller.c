@@ -1,8 +1,4 @@
 #include "controller/controller.h"
-#include "model/model.h"
-#include "view/view.h"
-#include "model/structs.h"
-#include <stdlib.h>
 
 typedef enum {
     MENU,

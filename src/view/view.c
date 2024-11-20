@@ -1,10 +1,4 @@
 #include "view/view.h"
-#include "controller/controller.h"
-#include "model/structs.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 
 // Definições de cores e estilos para o terminal
 #define RESET "\033[0m"
