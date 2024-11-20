@@ -2,11 +2,10 @@
 #define VIEW_H
 
 #include "model/manipulador_struct.h"
-#include "view/view.h"
+#include "view/interface_menu.h"
+#include "view/interface_catalago.h"
+#include "view/interface_caixa.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 
 void mostrar_menu();
 void mostrar_mensagem(const char* mensagem);

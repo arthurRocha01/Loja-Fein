@@ -6,6 +6,12 @@
 #include "model/manipulador_struct.h"
 #include <stdlib.h>
 
+typedef enum {
+    MENU,
+    PRODUTO,
+    CAIXA
+} Sessao;
+
 void iniciar();
 
 #endif

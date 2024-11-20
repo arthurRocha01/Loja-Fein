@@ -1,11 +1,5 @@
 #include "controller/controller.h"
 
-typedef enum {
-    MENU,
-    PRODUTO,
-    CAIXA
-} Sessao;
-
 Sessao sessao_atual = MENU;
 ListaProdutos *produtos;
 
