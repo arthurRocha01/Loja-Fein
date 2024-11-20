@@ -1,4 +1,4 @@
-#include "structs.h"
+#include "model/structs.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -35,6 +35,7 @@ float liberar_produto(Produto *produto) {
     free(produto->cor);
     free(produto->tamanhos);
     free(produto);
+    return 0;
 }
 
 static void preencher_tabela_produtos(TabelaProdutos *tabela, FILE *arquivo) {
@@ -52,7 +53,7 @@ static void preencher_tabela_produtos(TabelaProdutos *tabela, FILE *arquivo) {
     }
 }
 
-static TabelaProdutos* montar_tabela_produtos(FILE *arquivo, int linhas, int colunas) {
+static TabelaProdutos* montar_tabela_produtos(int linhas, int colunas) {
     TabelaProdutos *tabela = malloc(sizeof(TabelaProdutos));
     tabela->dados = malloc(linhas * sizeof(Produto**));
     tabela->linhas = linhas;
@@ -69,7 +70,7 @@ static TabelaProdutos* montar_tabela_produtos(FILE *arquivo, int linhas, int col
 }
 
 TabelaProdutos* carregar_tabela_produtos(FILE *arquivo, int linhas, int colunas) {
-    TabelaProdutos *tabela = montar_tabela_produtos(arquivo, linhas, colunas);
+    TabelaProdutos *tabela = montar_tabela_produtos(linhas, colunas);
     preencher_tabela_produtos(tabela, arquivo);
     return tabela;
 }

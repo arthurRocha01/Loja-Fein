@@ -1,7 +1,7 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#include "structs.h"
+#include "model/structs.h"
 
 void mostrar_menu();
 void mostrar_mensagem(const char* mensagem);

@@ -1,6 +1,6 @@
-#include "view.h"
-#include "controller.h"
-#include "structs.h"
+#include "view/view.h"
+#include "controller/controller.h"
+#include "model/structs.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

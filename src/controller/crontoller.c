@@ -1,7 +1,7 @@
-#include "controller.h"
-#include "model.h"
-#include "view.h"
-#include "structs.h"
+#include "controller/controller.h"
+#include "model/model.h"
+#include "view/view.h"
+#include "model/structs.h"
 #include <stdlib.h>
 
 typedef enum {
@@ -13,9 +13,9 @@ typedef enum {
 Sessao sessao_atual = MENU;
 ListaProdutos *produtos;
 
-void static gerenciar_menu();
-void static gerenciar_caixa(Produto *produto);
-void static escolher_produto();
+static void gerenciar_menu();
+static void gerenciar_caixa(Produto *produto);
+static void escolher_produto();
 
 static void alternar_sessao(Sessao nova_sessao, Produto *produto) {
     sessao_atual = nova_sessao;
@@ -58,10 +58,10 @@ static void exibir_produto(Produto *produto) {
     mostrar_produto(produto);
 }
 
-static Produto* selecionar_produto() {
+static void selecionar_produto() {
     mostrar_mensagem("Digite o ID do produto escolhido: ");
     int id = pegar_entrada();
-    Produto *produto = buscar_produto(id, produtos);
+    Produto *produto = pegar_produto(id, produtos);
     exibir_produto(produto);
     alternar_sessao(CAIXA, produto);
 }
@@ -96,6 +96,6 @@ static void gerenciar_menu() {
 }
 
 void iniciar() {
-    inicializar_sgd();
+    carregar_banco_dados();
     alternar_sessao(MENU, NULL);
 }
