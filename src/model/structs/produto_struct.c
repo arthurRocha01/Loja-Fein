@@ -1,4 +1,4 @@
-#include "model/produto_struct.h"
+#include "model/structs/produto_struct.h"
 
 static void definir_atributos_produto(Produto *produto, char *valor, int id, int atributo) {
     produto->id = id;

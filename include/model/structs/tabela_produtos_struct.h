@@ -1,7 +1,7 @@
 #ifndef TABELA_PRODUTOS_STRUCT_H
 #define TABELA_PRODUTOS_STRUCT_H
 
-#include "model/produto_struct.h"
+#include "model/structs/produto_struct.h"
 #include <stdio.h>
 #include <stdlib.h>
 

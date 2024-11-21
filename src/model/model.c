@@ -2,10 +2,6 @@
 
 extern TabelaProdutos *tabela_produtos;
 
-void carregar_banco_dados() {
-    inicializar_sgd();
-}
-
 int pegar_entrada() {
     int entrada;
     while (1) {

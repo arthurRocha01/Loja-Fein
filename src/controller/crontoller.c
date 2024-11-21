@@ -86,6 +86,6 @@ static void gerenciar_menu() {
 }
 
 void iniciar() {
-    carregar_banco_dados();
+    inicializar_sgd();
     alternar_sessao(MENU, NULL);
 }

@@ -1,7 +1,7 @@
 #ifndef LISTA_PRODUTOS_STRUCT_H
 #define LISTA_PRODUTOS_STRUCT_H
 
-#include "model/produto_struct.h"
+#include "model/structs/produto_struct.h"
 #include <stdlib.h>
 
 typedef struct {

@@ -9,7 +9,6 @@
 #include <math.h>
 #include <unistd.h>
 
-void carregar_banco_dados();
 int pegar_entrada();
 ListaProdutos* pegar_produtos_por_categoria(const char *categoria);
 Produto *pegar_produto(int id, ListaProdutos *produtos);

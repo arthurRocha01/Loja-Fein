@@ -1,4 +1,4 @@
-#include "model/tabela_produtos_struct.h"
+#include "model/structs/tabela_produtos_struct.h"
 
 static void preencher_tabela_produtos(TabelaProdutos *tabela, FILE *arquivo) {
     char buffer[100];

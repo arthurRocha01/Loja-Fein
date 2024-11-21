@@ -2,6 +2,7 @@
     "files.associations": {
         "controller.h": "c",
         "stdio.h": "c",
-        "manipulador_struct.h": "c"
+        "manipulador_struct.h": "c",
+        "tabela_produtos_struct.h": "c"
     }
 }

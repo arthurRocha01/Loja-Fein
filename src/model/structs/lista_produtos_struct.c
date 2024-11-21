@@ -1,4 +1,4 @@
-#include "model/lista_produtos_struct.h"
+#include "model/structs/lista_produtos_struct.h"
 
 void inicializar_lista(ListaProdutos *lista) {
     lista->produtos = malloc(10 * sizeof(Produto *));
