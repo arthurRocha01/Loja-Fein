@@ -14,18 +14,8 @@ static void alternar_sessao(Sessao nova_sessao, Produto *produto) {
     if (nova_sessao == CAIXA) gerenciar_caixa(produto);
 }
 
-static int obter_opcao(const char *mensagem_aviso, int num_opcoes) {
-    int opcao;
-    while (1) {
-        opcao = pegar_entrada();
-        if (opcao > 0 && opcao <= num_opcoes) {
-            return opcao;
-        }
-        mostrar_mensagem(mensagem_aviso);
-    }
-}
-
 static void efetuar_compra(Produto *produto) {
+    iniciar_formas_pagamento();
     comprar_produto(produto);
     printf("Produto comprado com sucesso!\n");
     mostrar_compra(produto);
@@ -34,7 +24,7 @@ static void efetuar_compra(Produto *produto) {
 
 static void gerenciar_caixa(Produto *produto) {
     if (produto) {
-    int opc = obter_opcao("\nOpção inválida. Tentenovamente.\nEscolha a opção: ", 2);
+    int opc = obter_opcao(2);
         if (opc == 1) efetuar_compra(produto);
         if (opc == 2) alternar_sessao(MENU, NULL);
     }
@@ -50,14 +40,14 @@ static void exibir_produto(Produto *produto) {
 
 static void selecionar_produto() {
     mostrar_mensagem("Digite o ID do produto escolhido: ");
-    int id = pegar_entrada();
+    int id = pegar_inteiro();
     Produto *produto = pegar_produto(id, produtos);
     exibir_produto(produto);
     alternar_sessao(CAIXA, produto);
 }
 
 static void escolher_produto() {
-    int opcao = obter_opcao("\nOpção inválida. Tentenovamente.\nEscolha a opção: ", 2);
+    int opcao = obter_opcao(2);
     if (opcao == 1) selecionar_produto();
     else alternar_sessao(MENU, NULL);
 }
@@ -75,7 +65,7 @@ static void sair() {
 
 static void gerenciar_menu() {
     mostrar_menu();
-    int opcao = obter_opcao("\nOpção inválida. Tentenovamente.\nEscolha a opção desejada: ", 5);
+    int opcao = obter_opcao(5);
     switch (opcao) {
         case 1: selecionar_categoria("Camisa"); break;
         case 2: selecionar_categoria("Bermuda"); break;

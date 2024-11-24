@@ -3,6 +3,7 @@
         "controller.h": "c",
         "stdio.h": "c",
         "manipulador_struct.h": "c",
-        "tabela_produtos_struct.h": "c"
+        "tabela_produtos_struct.h": "c",
+        "manipulador_formas_pagamento.h": "c"
     }
 }
