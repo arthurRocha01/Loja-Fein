@@ -1,20 +1,4 @@
-#include "model/funcoes_uteis.h"
-
-int pegar_inteiro() {
-    int entrada;
-    while (1) {
-        if (scanf("%d", &entrada) == 1) return entrada;
-        while (getchar() != '\n');
-    }
-}
-
-static char *pegar_string() {
-    char *string = malloc(100);
-    while (1) {
-        if (scanf("%99s", string) == 1) return string;
-        while (getchar()!= '\n');
-    }
-}
+#include "controller/controlador_funcoes_uteis.h"
 
 int obter_opcao(int num_opcoes) {
     int opcao;
@@ -34,5 +18,16 @@ char *obter_entrada(const char *mensagem) {
         entrada = pegar_string();
         if (entrada) return entrada;
         mostrar_mensagem("\nOpção inválida. Tentenovamente.\nEscolha a opção desejada: ");
+    }
+}
+
+float obter_entrada_float(const char *mensagem) {
+    float entrada;
+    while (1) {
+    mostrar_mensagem(mensagem);
+    entrada = pegar_float();
+    if (entrada) return entrada;
+    mostrar_mensagem("\nOpção inválida. Tentenovamente.\nEscolha a opção desejada: ");
+
     }
 }

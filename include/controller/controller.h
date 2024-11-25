@@ -1,17 +1,8 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "model/model.h"
-#include "view/view.h"
-#include "model/manipulador_struct.h"
-#include <stdlib.h>
+#include "controller/controlador_loja.h"
 
-typedef enum {
-    MENU,
-    PRODUTO,
-    CAIXA
-} Sessao;
-
-void iniciar();
+void iniciar_loja();
 
 #endif

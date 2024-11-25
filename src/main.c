@@ -2,5 +2,5 @@
 
 int main()
 {
-    iniciar();
+    iniciar_loja();
 }

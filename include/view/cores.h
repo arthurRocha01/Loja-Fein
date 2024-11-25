@@ -13,6 +13,7 @@
 #define WHITE "\033[37m"
 #define BG_BLUE "\033[44m"
 #define BG_GREEN "\033[42m"
+#define BG_RED "\033[41m"
 #define LINHA_BORDA "\033[34m"
 #define ESPACO_COLUNA 30
 
