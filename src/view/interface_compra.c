@@ -1,20 +1,28 @@
 #include "view/interface_compra.h"
 
-void mostrar_confirmacao_compra_cartao(CartaoCredito *cartao_credito) {
+void mostrar_confirmacao_compra_cartao(CartaoCredito *cartao_credito, int num_parcelas, float valor_parcela) {
     limpar_terminal();
     imprimir_cabecalho("  CONFIRMAR COMPRA  ");
     mostrar_mensagem("Revise os detalhes do produto antes de confirmar a compra.");
     
+    // Informações do cartão
     printf("\n\n%sNome do titular:%s %s\n", BOLD, RESET, cartao_credito->nome);
     printf("%sNúmero do cartão:%s %s\n", BOLD, RESET, cartao_credito->numero);
     printf("%sValidade do cartão:%s %s\n", BOLD, RESET, cartao_credito->data_validade);
     printf("%sCVV:%s %s\n", BOLD, RESET, cartao_credito->cvv);
 
+    // Informações sobre o pagamento
+    printf("\n%sDetalhes do pagamento:%s\n", BOLD, RESET);
+    printf("%sNúmero de parcelas:%s %d\n", BOLD, RESET, num_parcelas);
+    printf("%sValor de cada parcela:%s R$%.2f\n", BOLD, RESET, valor_parcela);
+
+    // Confirmação da compra
     printf("\n%sDeseja confirmar a compra deste produto?%s\n", BOLD, RESET);
     printf("%s[1]%s Sim\n", GREEN, RESET);
     printf("%s[2]%s Não\n", RED, RESET);
     printf("\n%sEscolha sua opção: %s", CYAN, RESET);
 }
+
 
 void mostrar_confirmacao_pagamento_dinheiro(float valor_compra, float troco) {
     limpar_terminal();

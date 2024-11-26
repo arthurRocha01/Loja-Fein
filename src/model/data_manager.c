@@ -4,9 +4,6 @@ FILE *arquivo;
 TabelaProdutos *tabela_produtos;
 ListaProdutos *lista_produtos;
 
-Produto *criar_produto(char *linha, int id);
-float liberar_produto(Produto *produto);
-
 static void carregar_arquivo(const char *caminho_arquivo) {
     arquivo = fopen(caminho_arquivo, "r");
 }

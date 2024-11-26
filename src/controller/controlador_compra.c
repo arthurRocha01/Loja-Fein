@@ -20,13 +20,19 @@ static void processar_pagamento_dinheiro() {
     else iniciar_controlador_loja();
 }
 
+static void parcelar() {
+    int num_parcelas = obter_entrada_int("Digite o número de parcelas: ");
+    float valor_parcela = produto->valor / num_parcelas;
+    mostrar_confirmacao_compra_cartao(cartao, num_parcelas, valor_parcela);
+    if (obter_opcao(2) == 1) return;
+    else iniciar_controlador_loja();
+}
+
 static void confirmar_pagamento(const char *forma_pagamento) {
     if (strcmp(forma_pagamento, "dinheiro") == 0) {
         processar_pagamento_dinheiro();
     } else {
-        mostrar_confirmacao_compra_cartao(cartao);
-        if (obter_opcao(2) == 1) return;
-        else iniciar_controlador_loja();
+        parcelar();
     }
 }
 

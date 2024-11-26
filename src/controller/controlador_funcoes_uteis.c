@@ -28,6 +28,15 @@ float obter_entrada_float(const char *mensagem) {
     entrada = pegar_float();
     if (entrada) return entrada;
     mostrar_mensagem("\nOpção inválida. Tentenovamente.\nEscolha a opção desejada: ");
+    }
+}
 
+int obter_entrada_int(const char *mensagem) {
+    int entrada;
+    while (1) {
+    mostrar_mensagem(mensagem);
+    entrada = pegar_inteiro();
+    if (entrada) return entrada;
+    mostrar_mensagem("\nOpção inválida. Tentenovamente.\nEscolha a opção desejada: ");
     }
 }
