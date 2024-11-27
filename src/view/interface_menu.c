@@ -1,13 +1,25 @@
 #include "view/interface_menu.h"
 
-void mostrar_menu() {
+static void exibir_opcao(const char *descricao, const char *cor) {
+    printf("%s%s%s\n", cor, descricao, RESET);
+}
+
+static void exibir_opcoes_menu() {
+    exibir_opcao("[1] Camisas", GREEN);
+    exibir_opcao("[2] Bermudas", GREEN);
+    exibir_opcao("[3] Calçados", GREEN);
+    exibir_opcao("[4] Acessórios", GREEN);
+    exibir_opcao("[5] Sair", RED);
+}
+
+static void exibir_cabecalho_menu() {
     limpar_terminal();
     imprimir_cabecalho("  MENU PRINCIPAL  ");
     printf("%sEscolha uma opção:%s\n\n", BOLD, RESET);
-    printf("%s[1]%s Camisas\n", GREEN, RESET);
-    printf("%s[2]%s Bermudas\n", GREEN, RESET);
-    printf("%s[3]%s Calçados\n", GREEN, RESET);
-    printf("%s[4]%s Acessórios\n", GREEN, RESET);
-    printf("%s[5]%s Sair\n", RED, RESET);
+}
+
+void mostrar_menu() {
+    exibir_cabecalho_menu();
+    exibir_opcoes_menu();
     printf("\n%sDigite sua escolha: %s", CYAN, RESET);
 }

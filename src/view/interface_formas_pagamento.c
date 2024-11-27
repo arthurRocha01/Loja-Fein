@@ -1,30 +1,37 @@
 #include "view/interface_formas_pagamento.h"
 
-void mostrar_menu_pagamento() {
+static void exibir_menu(const char *titulo, const char *opcoes[], int num_opcoes) {
     limpar_terminal();
-    imprimir_cabecalho("  FORMAS DE PAGAMENTO  ");
-    printf("%sEscolha uma forma de pagamento:%s\n\n", BOLD, RESET);
-    printf("%s[1]%s Dinheiro\n", GREEN, RESET);
-    printf("%s[2]%s Débito\n", GREEN, RESET);
-    printf("%s[3]%s Crédito\n", GREEN, RESET);
-    printf("%s[4]%s Voltar\n", YELLOW, RESET);
+    imprimir_cabecalho(titulo);
+    for (int i = 0; i < num_opcoes; i++) {
+        printf("%s[%d]%s %s\n", GREEN, i + 1, RESET, opcoes[i]);
+    }
     printf("\n%sDigite sua escolha: %s", CYAN, RESET);
 }
 
-void mostrar_opcao_pagamento(int tipo) {
-    limpar_terminal();
-    imprimir_cabecalho("  OPÇÕES DE PAGAMENTO  ");
-    if (tipo == 0) {
-        printf("%s[1]%s Confirmar pagamento\n", GREEN, RESET);
-    }
-    printf("%s[2]%s Voltar\n", YELLOW, RESET);
-    printf("\n%sEscolha a opção: %s", CYAN, RESET);
+void mostrar_menu_pagamento() {
+    const char *opcoes[] = {
+        "Dinheiro",
+        "Débito",
+        "Crédito",
+        "Voltar"
+    };
+    exibir_menu("  FORMAS DE PAGAMENTO  ", opcoes, 4);
 }
 
-void mostrar_pagamento_confirmado(int tipo) {
+void mostrar_opcao_pagamento(int tipo) {
+    const char *opcoes[] = {
+        "Confirmar pagamento",
+        "Voltar"
+    };
+    const char *titulo = tipo == 0 ? "  CONFIRMAÇÃO DE PAGAMENTO  " : "  OPÇÕES DE PAGAMENTO  ";
+    exibir_menu(titulo, opcoes, 2);
+}
+
+void mostrar_pagamento_confirmado(int sucesso) {
     limpar_terminal();
     imprimir_cabecalho("  PAGAMENTO REALIZADO  ");
-    if (tipo == 0) {
+    if (sucesso) {
         mostrar_mensagem("Pagamento realizado com sucesso!");
     } else {
         mostrar_mensagem("Pagamento não confirmado. Tente novamente.");
