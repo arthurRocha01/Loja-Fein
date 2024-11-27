@@ -6,6 +6,7 @@
         "tabela_produtos_struct.h": "c",
         "manipulador_formas_pagamento.h": "c",
         "controlador_compra.h": "c",
-        "controlador_funcoes_uteis.h": "c"
+        "controlador_funcoes_uteis.h": "c",
+        "interface_compra.h": "c"
     }
 }

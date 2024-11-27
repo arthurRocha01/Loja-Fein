@@ -15,17 +15,14 @@ static void alternar_sessao(Sessao nova_sessao, Produto *produto) {
     if (nova_sessao == CAIXA) gerenciar_caixa(produto);
 }
 
-static void efetuar_compra(Produto *produto) {
+static void efetuar_compra() {
     iniciar_formas_pagamento();
-    comprar_produto(produto);
-    mostrar_compra(produto);
-    alternar_sessao(MENU, NULL);
 }
 
 static void gerenciar_caixa(Produto *produto) {
     if (produto) {
     int opc = obter_opcao(2);
-        if (opc == 1) efetuar_compra(produto);
+        if (opc == 1) efetuar_compra();
         if (opc == 2) alternar_sessao(MENU, NULL);
     }
 }
