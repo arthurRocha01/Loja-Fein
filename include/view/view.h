@@ -1,6 +1,7 @@
 #ifndef VIEW_H
 #define VIEW_H
 
+#include "view/interface_acesso.h"
 #include "view/interface_menu.h"
 #include "view/interface_catalago.h"
 #include "view/interface_caixa.h"

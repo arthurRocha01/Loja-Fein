@@ -5,6 +5,7 @@
 #include "model/structs/tabela_produtos_struct.h"
 #include "model/structs/lista_produtos_struct.h"
 #include "model/structs/cartao_credito_struct.h"
+#include "model/structs/acesso_struct.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
